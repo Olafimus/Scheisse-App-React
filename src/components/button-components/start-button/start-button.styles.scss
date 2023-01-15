@@ -1,0 +1,103 @@
+.start-buttons {
+  /* height: 128px; */
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+
+  .add-container {
+    display: flex;
+    /* text-align: center; */
+    background-color: #008800;
+    width: 236.8px;
+    height: 48px;
+    border-radius: 24px;
+    /* margin: auto; */
+    margin-top: 15px;
+    box-shadow: 0px 0 rgb(3, 80, 3), 0 4px rgb(2, 73, 2), 4px 0 rgb(2, 73, 2);
+
+    &:hover {
+      cursor: pointer;
+      width: 14.9rem;
+      height: 3.1rem;
+    }
+
+    #player-name-input {
+      text-align: center;
+      background-color: lightgray;
+      font-size: 24px;
+      width: 179.2px;
+      height: 36.8px;
+      /* margin: auto; */
+      margin-top: 2.8px;
+      margin-left: 3.2px;
+      margin-right: 3px;
+      border-radius: 24px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    #add-player {
+      display: inline-block;
+      /* margin-top: auto;
+      margin-bottom: auto; */
+      margin-top: 5px;
+      font-size: 40px;
+      font-weight: 900;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-right: 3.2px;
+      border-width: 2.4px;
+      border-style: bold;
+      border-color: white;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      #add-plus {
+        position: relative;
+        bottom: 12.8px;
+        top: -12.8px;
+        right: 0.8px;
+
+        /* height: 25px;
+  margin: auto;
+  margin-bottom: 15px; */
+      }
+    }
+  }
+  .add-container:hover #add-player {
+    background-color: #008800;
+    color: white;
+    border-color: white;
+  }
+  .add-container:hover #player-name-input {
+    background-color: white;
+  }
+
+  #start-game {
+    color: antiquewhite;
+    font-size: 24px;
+    font-weight: 600;
+    width: 11rem;
+    height: 2.3rem;
+    border-radius: 2rem;
+    border-width: 0;
+    margin: auto;
+    margin-top: 0px;
+    background-color: #5d8a11;
+    box-shadow: 0px 0 rgb(3, 80, 3), 0 4px rgb(2, 73, 2), 4px 0 rgb(2, 73, 2),
+      0 0px darkgreen;
+
+    &:hover {
+      background: antiquewhite;
+      border-style: solid;
+      border-width: 2px;
+      border-color: #5d8a11;
+      color: #5d8a11;
+      transform: scale(1.08);
+    }
+  }
+}

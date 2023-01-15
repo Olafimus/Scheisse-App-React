@@ -1,0 +1,142 @@
+.bottom {
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: space-around;
+
+  .bottom-button {
+    height: 70%;
+    width: 20%;
+    align-content: center;
+    margin: auto;
+    margin-bottom: 1rem;
+  }
+
+  .allCheck-btn {
+    background-color: var(--iris-color);
+    color: var(--white-color);
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 0.7rem;
+    width: 15%;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .all-wrong-x {
+      color: var(--red-color);
+    }
+
+    .all-right-check {
+      color: var(--green-color);
+    }
+  }
+
+  #all-wrong:hover {
+    background-color: var(--red-color);
+  }
+
+  #all-wrong:hover .all-wrong-x {
+    background-color: var(--red-color);
+    color: var(--white-color);
+  }
+
+  #all-right:hover {
+    background-color: var(--green-color);
+  }
+
+  #all-right:hover .all-right-check {
+    background-color: var(--green-color);
+    color: var(--white-color);
+  }
+
+  #end-game {
+    font-size: 17px;
+    font-weight: 600;
+    width: 25%;
+    min-width: 8em;
+    max-width: 14em;
+    border: none;
+    padding-left: 2em;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(
+          120deg,
+          transparent 1em,
+          #900603 1.05em,
+          #900603 1.5em,
+          transparent 1.45em,
+          transparent 2em,
+          #900603 2.05em
+        )
+        top no-repeat,
+      linear-gradient(
+          -300deg,
+          transparent 1em,
+          #900603 1.05em,
+          #900603 1.5em,
+          transparent 1.45em,
+          transparent 2em,
+          #900603 2.05em
+        )
+        bottom no-repeat;
+    background-size: 100% 50%;
+    color: white;
+
+    #end-game:hover {
+      color: black;
+    }
+  }
+
+  #end-round {
+    font-size: 17px;
+    width: 25%;
+    min-width: 8em;
+    max-width: 14em;
+    font-weight: 600;
+
+    border: none;
+    padding-right: 2em;
+    text-align: center;
+    background: linear-gradient(
+          -120deg,
+          transparent 1em,
+          #008800 1.05em,
+          #008800 1.5em,
+          transparent 1.45em,
+          transparent 2em,
+          #008800 2.05em
+        )
+        top no-repeat,
+      linear-gradient(
+          300deg,
+          transparent 1em,
+          #008800 1.05em,
+          #008800 1.5em,
+          transparent 1.45em,
+          transparent 2em,
+          #008800 2.05em
+        )
+        bottom no-repeat;
+    background-size: 100% 50%;
+    color: white;
+
+    &:hover {
+      color: #900603;
+      cursor: pointer;
+    }
+  }
+
+  #reset {
+    background-color: yellow;
+    color: black;
+    width: 3rem;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+}

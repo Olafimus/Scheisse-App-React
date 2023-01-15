@@ -1,0 +1,64 @@
+.radio-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-right: 1rem;
+
+  .checkbos-button-container {
+    height: 100%;
+
+    .checkbox-button {
+      margin: 0;
+      width: 40%;
+      height: 90%;
+      background-color: rgba(150, 150, 150, 1);
+      font-size: 1.2rem;
+      font-weight: 900;
+      border-radius: 1rem;
+      border-style: none;
+      margin-top: 0.13rem;
+      padding-bottom: 0.1rem;
+    }
+
+    .right-button {
+      color: var(--green-color);
+      border-bottom-right-radius: 0.2rem;
+      border-top-right-radius: 0.2rem;
+
+      &:hover {
+        color: #faebd7;
+        background-color: var(--green-color);
+      }
+    }
+
+    .wrong-button {
+      color: var(--red-color);
+      border-bottom-left-radius: 0.2rem;
+      border-top-left-radius: 0.2rem;
+
+      &:hover {
+        color: var(--white-color);
+        background-color: var(--red-color);
+      }
+    }
+    .right {
+      color: #faebd7;
+      background-color: var(--green-color);
+      border-style: solid;
+      border-color: #02a102;
+      transform: scale(1.1);
+      transition: 1s;
+    }
+
+    .wrong {
+      color: var(--white-color);
+      background-color: var(--red-color);
+      border-style: solid;
+      border-width: 0.01rem;
+      border-color: #a12702;
+      transform: scale(1.1);
+      transition: 1s;
+    }
+  }
+}

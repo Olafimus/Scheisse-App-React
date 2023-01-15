@@ -1,0 +1,24 @@
+.card-selector {
+  .card-button {
+    font-size: 20px;
+    font-weight: 700;
+    width: 3.5rem;
+    height: 2.2rem;
+    border-radius: 2rem;
+    background-color: rgba(128, 128, 128, 0.505);
+    border-color: blanchedalmond;
+    color: rgba(240, 248, 255, 0.744);
+    margin-top: 10px;
+    margin-left: 3.5px;
+    margin-right: 3.5px;
+  }
+
+  .active {
+    transform: scale(1.05);
+    border-style: solid;
+    transition: 1000ms;
+    background: aliceblue;
+    color: black;
+    border-color: gold;
+  }
+}
