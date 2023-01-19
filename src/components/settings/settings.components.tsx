@@ -1,9 +1,18 @@
 import { useRef, useState } from "react";
+
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useAppDispatch } from "../../app/hooks";
+import { restartAppParas } from "../../features/game-parameters/gameParaSlice";
+import {
+  newRoundPlayers,
+  restartAppPlayers,
+} from "../../features/player/playerSlice";
 import "./settings.styles.scss";
 
 const Settings = () => {
   const [show, setShow] = useState(false);
   const dropdownBtn = useRef<HTMLButtonElement>(null);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="dropdown-container">
@@ -13,7 +22,7 @@ const Settings = () => {
         ref={dropdownBtn}
         onClick={() => setShow(!show)}
       >
-        <div>X</div>
+        <GiHamburgerMenu color="white" id="menu-icon" />
       </button>
       {show && (
         <>
@@ -25,8 +34,24 @@ const Settings = () => {
             </button>
             <button id="statistics-button">Statistiken</button>
             <span id="drop-space"></span>
-            <button id="new-round-button">Noch ein Match</button>
-            <button id="restart-button">App Neustart</button>
+            <button
+              id="new-round-button"
+              onClick={() => {
+                dispatch(newRoundPlayers());
+                dispatch(restartAppParas());
+              }}
+            >
+              Noch ein Match
+            </button>
+            <button
+              id="restart-button"
+              onClick={() => {
+                dispatch(restartAppPlayers());
+                dispatch(restartAppParas());
+              }}
+            >
+              App Neustart
+            </button>
           </div>
         </>
       )}

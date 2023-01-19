@@ -78,6 +78,9 @@ export const gameParaSlice = createSlice({
     endGame: (state) => {
       state.finished = true;
     },
+    restartAppParas: (state) => {
+      return initialState;
+    },
   },
 });
 
@@ -90,5 +93,6 @@ export const {
   addStiche,
   setCalledStiche,
   endGame,
+  restartAppParas,
 } = gameParaSlice.actions;
 export default gameParaSlice.reducer;

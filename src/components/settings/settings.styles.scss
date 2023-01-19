@@ -8,8 +8,11 @@
   .dropdown-button {
     float: right;
     background: transparent;
+
+    border-style: none;
     #menu-icon {
-      height: 25px;
+      height: 2rem;
+      width: 2rem;
     }
   }
   .dropdown-reiter {
@@ -33,6 +36,7 @@
 
       &:hover {
         color: antiquewhite;
+        cursor: pointer;
       }
     }
     #table-icon {

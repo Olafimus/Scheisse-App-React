@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import PlayerBox from "../../components/player-components/player-box-components/player-box.component";
 import PlayerList from "../../components/player-components/player-list.component";
-import { Iplayer } from "./playerInterface";
+import { freshPlayer, Iplayer } from "./playerInterface";
 
 export interface playerState {
   players: Array<Iplayer>;
@@ -101,6 +101,20 @@ export const counterSlice = createSlice({
 
       state.allChecked = false;
     },
+    restartAppPlayers: (state) => {
+      return initialState;
+    },
+    newRoundPlayers: (state) => {
+      const newPlayers: Array<Iplayer> = [];
+      state.players.forEach((player) => {
+        const newPlayer = { ...freshPlayer };
+        newPlayers.push(newPlayer);
+
+        newPlayers[newPlayers.length - 1].name = player.name;
+        newPlayers[newPlayers.length - 1].playerId = player.playerId;
+      });
+      state.players = newPlayers;
+    },
   },
 });
 
@@ -111,5 +125,7 @@ export const {
   setAllAnswers,
   setCurrentStiche,
   sumScore,
+  restartAppPlayers,
+  newRoundPlayers,
 } = counterSlice.actions;
 export default counterSlice.reducer;

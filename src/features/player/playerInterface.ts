@@ -17,3 +17,23 @@ export interface Iplayer {
   firstPlacement?: number;
   placementCounts?: object;
 }
+
+export const freshPlayer: Iplayer = {
+  name: "none",
+  currentScore: 0,
+  score: [0],
+  currentStich: 0,
+  stiche: [],
+  checked: false,
+  rightAnswer: false,
+  placement: undefined,
+  placements: [],
+  stichHistory: [],
+  playerId: "none",
+  currentWinStreak: 0,
+  maxWinStreak: 0,
+  currentLoseStreak: 0,
+  maxLoseStreak: 0,
+  firstPlacement: 0,
+  placementCounts: {},
+};
