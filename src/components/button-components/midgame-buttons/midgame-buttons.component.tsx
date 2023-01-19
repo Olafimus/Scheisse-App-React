@@ -1,9 +1,26 @@
-import { useAppDispatch } from "../../../app/hooks";
-import { setAllAnswers } from "../../../features/player/playerSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  endGame,
+  increaseRoundNumber,
+} from "../../../features/game-parameters/gameParaSlice";
+import { setAllAnswers, sumScore } from "../../../features/player/playerSlice";
 import "./midgame-buttons.styles.scss";
 
 const MidgameButtons = () => {
   const dispatch = useAppDispatch();
+  const playerNumber = useAppSelector((state) => state.gamePara.playerNumber);
+  const roundNumber = useAppSelector((state) => state.gamePara.roundNumber);
+  const endRound = useAppSelector((state) => state.gamePara.endRound);
+  const finished = useAppSelector((state) => state.gamePara.finished);
+
+  const nextRound = () => {
+    if (!finished) {
+      dispatch(sumScore(playerNumber));
+
+      if (roundNumber != endRound) dispatch(increaseRoundNumber());
+      if (roundNumber === endRound) dispatch(endGame());
+    }
+  };
 
   const allRight = () => {
     const allRightBtns = document.querySelectorAll(".right-button");
@@ -54,7 +71,7 @@ const MidgameButtons = () => {
         >
           all <span className="all-right-check">&#10003;</span>{" "}
         </button>
-        <button className="bottom-button" id="end-round">
+        <button className="bottom-button" id="end-round" onClick={nextRound}>
           Next Round
         </button>
       </div>

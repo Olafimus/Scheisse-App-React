@@ -1,13 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import PlayerBox from "../../components/player-components/player-box-components/player-box.component";
+import PlayerList from "../../components/player-components/player-list.component";
 import { Iplayer } from "./playerInterface";
 
 export interface playerState {
   players: Array<Iplayer>;
+  allChecked: boolean;
 }
 
 const initialState: playerState = {
   players: [],
+  allChecked: false,
+};
+
+const handleCheck = (
+  players: Array<Iplayer>,
+  id: string,
+
+  bool: boolean
+) => {
+  const player = players.find((el) => el.playerId === id);
+  if (player) {
+    player.checked = true;
+    let checks = true;
+    players.forEach((el) => {
+      if (!el.checked) checks = false;
+    });
+    player.rightAnswer = bool;
+    if (checks) return true;
+    else return false;
+  } else console.log("player undefined");
 };
 
 export const counterSlice = createSlice({
@@ -21,8 +43,9 @@ export const counterSlice = createSlice({
         score: [0],
         currentStich: 0,
         stiche: [],
+        checked: false,
         rightAnswer: false,
-        placement: 0,
+        placement: undefined,
         placements: [],
         stichHistory: [],
         playerId: payload.id,
@@ -36,21 +59,25 @@ export const counterSlice = createSlice({
       state.players.push(player);
     },
     setRight: (state, { payload }) => {
-      const player = state.players.find(
-        (el) => el.playerId === payload.playerId
-      );
-      if (player) player.rightAnswer = true;
+      let check = handleCheck(state.players, payload.playerId, true);
+      if (check) state.allChecked = true;
     },
     setWrong: (state, { payload }) => {
-      const player = state.players.find(
-        (el) => el.playerId === payload.playerId
-      );
-      if (player) player.rightAnswer = false;
+      let check = handleCheck(state.players, payload.playerId, false);
+      if (check) state.allChecked = true;
     },
     setAllAnswers: (state, { payload }) => {
       state.players.forEach((player) => (player.rightAnswer = payload));
+      state.allChecked = true;
     },
-    sumScore: (state) => {
+    setCurrentStiche: (state, { payload }) => {
+      const { id, count } = payload;
+      const player = state.players.find((el) => el.playerId === id);
+      if (player) player.currentStich = count;
+      else console.log("player undefined");
+    },
+    sumScore: (state, { payload }) => {
+      const currentScores: Array<number> = [];
       state.players.forEach((player) => {
         if (player.rightAnswer === true) {
           player.currentScore += 10 + Number(player.currentStich);
@@ -59,11 +86,30 @@ export const counterSlice = createSlice({
         }
         player.score.push(player.currentScore);
         player.stichHistory.push(player.currentStich);
+        currentScores.push(player.currentScore);
+        player.checked = false;
+        player.currentStich = 0;
       });
+
+      state.players.forEach((player) => {
+        for (let i = payload; i >= 0; i--) {
+          if (player.currentScore === currentScores[i - 1])
+            player.placement = i;
+          else continue;
+        }
+      });
+
+      state.allChecked = false;
     },
   },
 });
 
-export const { addPlayer, setRight, setWrong, setAllAnswers, sumScore } =
-  counterSlice.actions;
+export const {
+  addPlayer,
+  setRight,
+  setWrong,
+  setAllAnswers,
+  setCurrentStiche,
+  sumScore,
+} = counterSlice.actions;
 export default counterSlice.reducer;

@@ -1,13 +1,17 @@
 import * as React from "react";
 import uuid from "react-uuid";
-import { useAppDispatch } from "../../../app/hooks";
-import { startGame } from "../../../features/game-parameters/gameParaSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  setPlayerNumber,
+  startGame,
+} from "../../../features/game-parameters/gameParaSlice";
 import { addPlayer } from "../../../features/player/playerSlice";
 import CardSelector from "./card-selector/card-selector.component";
 import "./start-button.styles.scss";
 
 const StartButton = () => {
   const dispatch = useAppDispatch();
+  const players = useAppSelector((state) => state.player.players);
   const nameInput = React.useRef<HTMLInputElement>(null);
 
   return (
@@ -29,6 +33,7 @@ const StartButton = () => {
                 id,
               };
               dispatch(addPlayer(payload));
+
               nameInput.current.value = "";
             }
           }}

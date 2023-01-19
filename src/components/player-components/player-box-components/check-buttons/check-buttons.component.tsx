@@ -1,7 +1,7 @@
 import "./check-buttons.styles.scss";
 import * as React from "react";
 import { Iplayer } from "../../../../features/player/playerInterface";
-import { useAppDispatch } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { setRight, setWrong } from "../../../../features/player/playerSlice";
 
 interface props {
@@ -12,6 +12,14 @@ const CheckButtons: React.FC<props> = ({ player }) => {
   const dispatch = useAppDispatch();
   const rightButton = React.useRef<HTMLButtonElement>(null);
   const wrongButton = React.useRef<HTMLButtonElement>(null);
+  const checked = useAppSelector((state) => state.player.allChecked);
+
+  React.useEffect(() => {
+    if (!checked) {
+      wrongButton.current?.classList.remove("wrong");
+      rightButton.current?.classList.remove("right");
+    }
+  }, [checked]);
 
   const rightBtnClick = () => {
     console.log(rightButton.current);
