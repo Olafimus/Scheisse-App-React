@@ -29,8 +29,7 @@ const persistedReducer = persistReducer(persistConfig, appReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   // devTools: process.env.NODE_ENV !== "production",
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(logger, thunk),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export type AppDispatch = typeof store.dispatch;
