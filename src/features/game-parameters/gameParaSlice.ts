@@ -9,6 +9,9 @@ interface gameState {
   endRound: number;
   calledStiche: number;
   maxStiche: number;
+  sticheComp: string;
+  lastRound: boolean;
+  reset: boolean;
   finished: boolean;
 }
 
@@ -20,6 +23,9 @@ const initialState: gameState = {
   endRound: 0,
   calledStiche: 0,
   maxStiche: 1,
+  sticheComp: "bad",
+  lastRound: false,
+  reset: false,
   finished: false,
 };
 
@@ -47,6 +53,9 @@ export const gameParaSlice = createSlice({
     },
     increaseRoundNumber: (state) => {
       state.roundNumber += 1;
+      state.lastRound = false;
+    },
+    calcMaxStiche: (state) => {
       const roundedMaxStiche = Math.trunc(
         state.amountCards / state.playerNumber
       );
@@ -54,29 +63,18 @@ export const gameParaSlice = createSlice({
         state.maxStiche =
           roundedMaxStiche - (state.roundNumber - roundedMaxStiche);
       else state.maxStiche = state.roundNumber;
-    },
-    decreaseRoundNumber: (state) => {
-      state.roundNumber -= 1;
-      const roundedMaxStiche = Math.trunc(
-        state.amountCards / state.playerNumber
-      );
-      if (state.roundNumber > roundedMaxStiche)
-        state.maxStiche =
-          roundedMaxStiche - (state.roundNumber - roundedMaxStiche);
-      else state.maxStiche = state.roundNumber;
-    },
-    addStiche: (state, { payload }) => {
-      let count = 0;
-      payload.forEach((player: Iplayer) => {
-        count += player.currentStich;
-      });
-      state.calledStiche = count;
     },
     setCalledStiche: (state, { payload }) => {
       state.calledStiche = payload;
+      if (state.calledStiche === state.maxStiche) state.sticheComp = "good";
+      else state.sticheComp = "bad";
     },
     endGame: (state) => {
       state.finished = true;
+    },
+    lastRoundStats: (state) => {
+      if (state.roundNumber > 1) state.roundNumber--;
+      state.lastRound = true;
     },
     restartAppParas: (state) => {
       return initialState;
@@ -89,10 +87,10 @@ export const {
   setAmountCards,
   setPlayerNumber,
   increaseRoundNumber,
-  decreaseRoundNumber,
-  addStiche,
+  calcMaxStiche,
   setCalledStiche,
   endGame,
+  lastRoundStats,
   restartAppParas,
 } = gameParaSlice.actions;
 export default gameParaSlice.reducer;

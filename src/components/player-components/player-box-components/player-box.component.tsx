@@ -3,11 +3,7 @@ import * as React from "react";
 import { Iplayer } from "../../../features/player/playerInterface";
 import CheckButtons from "./check-buttons/check-buttons.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  setCurrentStiche,
-  sumScore,
-} from "../../../features/player/playerSlice";
-import { addStiche } from "../../../features/game-parameters/gameParaSlice";
+import { setCurrentStiche } from "../../../features/player/playerSlice";
 
 interface props {
   player: Iplayer;
@@ -15,25 +11,29 @@ interface props {
 
 const PlayerBox: React.FC<props> = ({ player }) => {
   const sticheInput = React.useRef<HTMLInputElement>(null);
+
   const dispatch = useAppDispatch();
   const players = useAppSelector((state) => state.player.players);
   const roundNUmber = useAppSelector((state) => state.gamePara.roundNumber);
+  const lastRound = useAppSelector((state) => state.gamePara.lastRound);
 
   const onChangeHandler = () => {
-    console.log(sticheInput.current?.value);
+    console.log(Number(sticheInput.current?.value));
     const count = Number(sticheInput.current?.value);
-    if (count) {
+    if (count >= 0) {
       const payload = {
         count,
         id: player.playerId,
       };
       dispatch(setCurrentStiche(payload));
-      dispatch(addStiche(players));
     }
   };
 
   const reset = () => {
-    if (sticheInput.current?.value) sticheInput.current.value = "";
+    if (null !== sticheInput.current) {
+      if (!lastRound) sticheInput.current.value = "";
+      else sticheInput.current.value = player.currentStich.toString();
+    }
   };
 
   React.useEffect(() => {
@@ -44,7 +44,7 @@ const PlayerBox: React.FC<props> = ({ player }) => {
     <div className="player-box">
       <div className="name-container">
         {player.placement ? (
-          <p className="playerName" id="player-name${playerId}">
+          <p className="playerName" id="player-name">
             {player.name} {player.placement}.
           </p>
         ) : (
@@ -69,7 +69,9 @@ const PlayerBox: React.FC<props> = ({ player }) => {
             max="16"
             min="0"
             className="player-stiche"
+            id={player.playerId}
             ref={sticheInput}
+            defaultValue={""}
             onChange={onChangeHandler}
           />
         </div>

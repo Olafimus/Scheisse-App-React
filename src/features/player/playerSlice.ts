@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import PlayerBox from "../../components/player-components/player-box-components/player-box.component";
-import PlayerList from "../../components/player-components/player-list.component";
 import { freshPlayer, Iplayer } from "./playerInterface";
 
 export interface playerState {
   players: Array<Iplayer>;
   allChecked: boolean;
+  giverIndex: number;
+  giver: string;
 }
 
 const initialState: playerState = {
   players: [],
   allChecked: false,
+  giverIndex: 0,
+  giver: "",
 };
 
 const handleCheck = (
@@ -87,19 +89,38 @@ export const counterSlice = createSlice({
         player.score.push(player.currentScore);
         player.stichHistory.push(player.currentStich);
         currentScores.push(player.currentScore);
+
         player.checked = false;
         player.currentStich = 0;
       });
 
+      currentScores.sort((a, b) => b - a);
+      console.log("scores: ", currentScores);
       state.players.forEach((player) => {
         for (let i = payload; i >= 0; i--) {
-          if (player.currentScore === currentScores[i - 1])
+          if (player.currentScore === currentScores[i - 1]) {
             player.placement = i;
-          else continue;
+          } else continue;
         }
+        if (player.placement != undefined && player.placements != undefined)
+          player.placements.push(player.placement);
       });
 
       state.allChecked = false;
+    },
+    lastRoundPlayers: (state, { payload }) => {
+      state.players.forEach((player) => {
+        player.score?.pop();
+        player.currentScore = player.score.at(-1) || 0;
+        player.currentStich = player.stichHistory?.pop() || 0;
+        player.placements?.pop();
+        player.placement = player.placements?.at(-1) || undefined;
+        player.checked = false;
+      });
+      state.allChecked = false;
+      if (state.giverIndex === 0) state.giverIndex = state.players.length - 1;
+      else state.giverIndex--;
+      state.giver = state.players[state.giverIndex].name;
     },
     restartAppPlayers: (state) => {
       return initialState;
@@ -115,6 +136,15 @@ export const counterSlice = createSlice({
       });
       state.players = newPlayers;
     },
+    setGiver: (state, { payload }) => {
+      state.giverIndex = payload;
+      state.giver = state.players[state.giverIndex].name;
+    },
+    nextGiver: (state) => {
+      if (state.giverIndex < state.players.length - 1) state.giverIndex++;
+      else state.giverIndex = 0;
+      state.giver = state.players[state.giverIndex].name;
+    },
   },
 });
 
@@ -127,5 +157,8 @@ export const {
   sumScore,
   restartAppPlayers,
   newRoundPlayers,
+  setGiver,
+  nextGiver,
+  lastRoundPlayers,
 } = counterSlice.actions;
 export default counterSlice.reducer;

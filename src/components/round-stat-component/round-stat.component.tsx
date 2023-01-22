@@ -4,6 +4,8 @@ import "./round-stat.styles.scss";
 
 const RoundStats = () => {
   const gamePara = useAppSelector((state) => state.gamePara);
+  const giver = useAppSelector((state) => state.player.giver);
+  const sticheComp = useAppSelector((state) => state.gamePara.sticheComp);
 
   useEffect(() => {}, [gamePara.calledStiche, gamePara.maxStiche]);
 
@@ -12,22 +14,19 @@ const RoundStats = () => {
       {gamePara.started && (
         <>
           <div className="round-stat">
-            <p>Runde</p>
             <p id="round-number">
-              {gamePara.roundNumber} von {gamePara.endRound}
+              Runde {gamePara.roundNumber} von {gamePara.endRound}
             </p>
           </div>
           <div>
             <span>
-              <p>Geber:</p>
-              <p id="card-giver">Spieler 1</p>
+              <p id="card-giver">Geber: {giver}</p>
             </span>
           </div>
-          <div className="stiche-comparison">
-            <p>Stiche:</p>
-            <p id="current-stiche">{gamePara.calledStiche}</p>
-            <p>/</p>
-            <p id="max-stiche">{gamePara.maxStiche}</p>
+          <div className={`stiche-comparison ${sticheComp}`}>
+            <p id="current-stiche">
+              Stiche: {gamePara.calledStiche} / {gamePara.maxStiche}
+            </p>
           </div>
         </>
       )}

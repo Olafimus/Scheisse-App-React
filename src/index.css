@@ -17,10 +17,11 @@
 } */
 body {
   font-family: roboto, helvetica, Arial;
-  padding-top: 90px;
+  /* padding-top: 90px; */
   background: #141414;
   padding-bottom: 70px;
   width: 100%;
+  margin: 0;
   /* background-image: url("dark-background.jpg"); */
 
   letter-spacing: 1px;

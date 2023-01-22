@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { restartAppParas } from "../../features/game-parameters/gameParaSlice";
 import {
@@ -28,12 +29,16 @@ const Settings = () => {
         <>
           <br />
           <div className="hidden dropdown-reiter" id="dropdown--reiter">
-            <button id="score-btn">
-              {/* <img src="table-icon.svg" id="table-icon" alt="table icon" /> */}
-              <p>Scoreboard</p>
-            </button>
+            <Link to={"/scoreboard"}>
+              <button id="score-btn">
+                <p>Scoreboard</p>
+              </button>
+            </Link>
             <button id="statistics-button">Statistiken</button>
             <span id="drop-space"></span>
+            <Link to={"/ceremony"}>
+              <button>Ceremony</button>
+            </Link>
             <button
               id="new-round-button"
               onClick={() => {

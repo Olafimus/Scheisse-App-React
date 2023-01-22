@@ -5,7 +5,7 @@ import {
   setPlayerNumber,
   startGame,
 } from "../../../features/game-parameters/gameParaSlice";
-import { addPlayer } from "../../../features/player/playerSlice";
+import { addPlayer, setGiver } from "../../../features/player/playerSlice";
 import CardSelector from "./card-selector/card-selector.component";
 import "./start-button.styles.scss";
 
@@ -46,6 +46,7 @@ const StartButton = () => {
         id="start-game"
         onClick={() => {
           dispatch(startGame());
+          dispatch(setGiver(0));
         }}
       >
         Start Game

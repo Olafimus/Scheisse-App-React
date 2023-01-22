@@ -1,0 +1,54 @@
+.scoreboard-component {
+  width: 95%;
+
+  table {
+    width: 100%;
+    padding: 0;
+    border-collapse: collapse;
+    border-color: white;
+    table-layout: fixed;
+
+    th {
+      position: sticky;
+      font-size: 20px;
+      font-weight: 600;
+      border-style: solid;
+      border-width: 0;
+      border-bottom-width: 0.2rem;
+      padding-bottom: 10px;
+
+      // padding: 10px;
+      // padding-left: 0;
+      // padding-right: 0;
+    }
+    td {
+      border-style: solid;
+      border-width: 0;
+      border-bottom-width: 0.1rem;
+      border-left-width: 0.15rem;
+      border-right-width: 0.15rem;
+      border-left-color: white;
+      border-right-color: white;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      // &:nth-child(2n) {
+      //   background-color: aqua;
+      // }
+    }
+    tr {
+      &:nth-child(2n) {
+        background-color: rgba(32, 37, 37, 0.67);
+      }
+    }
+
+    .first {
+      background-color: rgb(205, 167, 0);
+    }
+    .second {
+      background-color: silver;
+    }
+    .third {
+      background-color: #cd7f32;
+    }
+  }
+}

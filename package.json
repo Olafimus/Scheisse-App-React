@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/redux-persist": "^4.3.1"
+    "@types/redux-persist": "^4.3.1",
+    "react-router-dom": "^6.7.0"
   }
 }
