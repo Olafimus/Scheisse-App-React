@@ -1,18 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { freshPlayer, Iplayer } from "./playerInterface";
+import { sortByGiver, sortByPlacement } from "./state-variables";
 
 export interface playerState {
   players: Array<Iplayer>;
+
   allChecked: boolean;
   giverIndex: number;
   giver: string;
+  sortMode: string;
 }
 
 const initialState: playerState = {
   players: [],
+
   allChecked: false,
   giverIndex: 0,
   giver: "",
+  sortMode: "none",
 };
 
 const handleCheck = (
@@ -57,6 +62,7 @@ export const counterSlice = createSlice({
         maxLoseStreak: 0,
         firstPlacement: 0,
         placementCounts: {},
+        position: 0,
       };
       state.players.push(player);
     },
@@ -122,7 +128,7 @@ export const counterSlice = createSlice({
       else state.giverIndex--;
       state.giver = state.players[state.giverIndex].name;
     },
-    restartAppPlayers: (state) => {
+    restartAppPlayers: () => {
       return initialState;
     },
     newRoundPlayers: (state) => {
@@ -138,12 +144,69 @@ export const counterSlice = createSlice({
     },
     setGiver: (state, { payload }) => {
       state.giverIndex = payload;
+      state.players.map((el, i) => (el.position = i));
       state.giver = state.players[state.giverIndex].name;
     },
     nextGiver: (state) => {
-      if (state.giverIndex < state.players.length - 1) state.giverIndex++;
-      else state.giverIndex = 0;
-      state.giver = state.players[state.giverIndex].name;
+      const currentGiver = state.players.find((pl) => pl.name === state.giver);
+      if (currentGiver?.position != undefined)
+        state.giverIndex = currentGiver?.position + 1;
+      if (state.giverIndex === state.players.length) state.giverIndex = 0;
+
+      const newGiver = state.players.find(
+        (pl) => pl.position === state.giverIndex
+      );
+      if (newGiver != undefined) state.giver = newGiver.name;
+
+      // if (state.giverIndex < state.players.length - 1) state.giverIndex++;
+      // else state.giverIndex = 0;
+      // const player = state.players.find(
+      //   (pl) => pl.position === state.giverIndex
+      // );
+      // if (player) state.giver = player.name;
+    },
+    setSortMode: (state, { payload }) => {
+      state.sortMode = payload;
+    },
+    sortPlayers: (state) => {
+      if (state.sortMode === "giver") {
+        console.log("giver");
+        state.players.sort((a, b) => a.position - b.position);
+        if (state.giverIndex > 0) {
+          const currentGiver = state.players.find(
+            (pl) => pl.name === state.giver
+          );
+          const index = currentGiver?.position || 0;
+          const newPlayers = [...state.players];
+          const splice = newPlayers.splice(index);
+          state.players = [...splice, ...newPlayers];
+        }
+      }
+
+      if (state.sortMode === "placement") {
+        console.log("giver");
+        state.players.sort((a, b) => {
+          if (!a.placement) a.placement = 0;
+          if (!b.placement) b.placement = 0;
+          console.log("fire");
+          return a.placement - b.placement;
+        });
+      }
+    },
+    movePlayerUp: (state, { payload }) => {
+      [state.players[payload], state.players[payload - 1]] = [
+        state.players[payload - 1],
+        state.players[payload],
+      ];
+    },
+    movePlayerDown: (state, { payload }) => {
+      [state.players[payload], state.players[payload + 1]] = [
+        state.players[payload + 1],
+        state.players[payload],
+      ];
+    },
+    deletePlayer: (state, { payload }) => {
+      state.players.splice(payload, 1);
     },
   },
 });
@@ -155,10 +218,15 @@ export const {
   setAllAnswers,
   setCurrentStiche,
   sumScore,
+  setSortMode,
+  sortPlayers,
   restartAppPlayers,
   newRoundPlayers,
   setGiver,
   nextGiver,
   lastRoundPlayers,
+  movePlayerUp,
+  movePlayerDown,
+  deletePlayer,
 } = counterSlice.actions;
 export default counterSlice.reducer;

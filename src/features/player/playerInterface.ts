@@ -7,7 +7,7 @@ export interface Iplayer {
   checked: boolean;
   rightAnswer: boolean;
   placement: number | undefined;
-  placements?: Array<number>;
+  placements: Array<number>;
   stichHistory: Array<number>;
   playerId: string;
   currentWinStreak?: number;
@@ -16,6 +16,7 @@ export interface Iplayer {
   maxLoseStreak?: number;
   firstPlacement?: number;
   placementCounts?: object;
+  position: number;
 }
 
 export const freshPlayer: Iplayer = {
@@ -36,4 +37,5 @@ export const freshPlayer: Iplayer = {
   maxLoseStreak: 0,
   firstPlacement: 0,
   placementCounts: {},
+  position: 0,
 };

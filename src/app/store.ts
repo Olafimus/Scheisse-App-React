@@ -12,6 +12,7 @@ import logger from "redux-logger";
 import { persistReducer } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import thunk from "redux-thunk";
+import GameSetReducer from "../features/game-settings/GameSetSlice";
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   counter: counterReducer,
   player: playerReducer,
   gamePara: gameParaReducer,
+  gameSettings: GameSetReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

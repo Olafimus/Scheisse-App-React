@@ -10,6 +10,7 @@ import {
   lastRoundPlayers,
   nextGiver,
   setAllAnswers,
+  sortPlayers,
   sumScore,
 } from "../../../features/player/playerSlice";
 import "./midgame-buttons.styles.scss";
@@ -27,6 +28,7 @@ const MidgameButtons = () => {
     if (!finished && allChecked) {
       dispatch(sumScore(playerNumber));
       dispatch(nextGiver());
+      dispatch(sortPlayers());
 
       if (roundNumber != endRound) {
         dispatch(increaseRoundNumber());

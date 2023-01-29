@@ -1,0 +1,25 @@
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  .dropdown-button {
+    width: fit-content;
+    align-self: flex-start;
+    background-color: var(--iris-color);
+    transition: 0.4s;
+    &::after {
+      padding: 0px 5px;
+      content: "\2228";
+    }
+  }
+  .dropdown-options {
+    background-color: antiquewhite;
+    text-align: center;
+    transition: max-height 0.4s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+  }
+  .active {
+    max-height: 10rem;
+  }
+}

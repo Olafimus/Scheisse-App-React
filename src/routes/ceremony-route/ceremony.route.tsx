@@ -4,6 +4,7 @@ import { useAppSelector } from "../../app/hooks";
 import { freshPlayer, Iplayer } from "../../features/player/playerInterface";
 import CeremonyTable from "../../components/ceremony-components/ceremony-table/ceremony-table.component";
 import { Link } from "react-router-dom";
+import BackButton from "../../components/button-components/back-button/BackButton";
 
 const CeremonyRoute = () => {
   const [sortedPlayers, setSortedPlayers] = useState<Array<Iplayer>>([]);
@@ -38,9 +39,7 @@ const CeremonyRoute = () => {
 
   return (
     <>
-      <Link to={"/"}>
-        <button className="back-button">Go Back</button>
-      </Link>
+      <BackButton />
       {check && (
         <div
           className="podest-table"

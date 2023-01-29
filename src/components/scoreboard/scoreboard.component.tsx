@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { finished } from "stream";
+import { nanoid } from "@reduxjs/toolkit";
 import { useAppSelector } from "../../app/hooks";
 import "./scoreboard.styles.scss";
 
@@ -8,6 +8,7 @@ interface RowObject {
   placement?: string | undefined;
   right?: boolean;
   round?: number;
+  id: string | number;
 }
 
 const Scoreboard = () => {
@@ -29,20 +30,25 @@ const Scoreboard = () => {
 
   const createRows = () => {
     const rows = [];
-    for (let i = 0; i < roundNumber; i++) {
-      const row: Array<RowObject> = [{ score: i }];
+    for (let i = 1; i < players[0].score.length; i++) {
+      const row: Array<RowObject> = [{ score: i, id: i }];
       players.forEach((player) => {
         let placement = "";
+        const id = nanoid();
+        let right = false;
 
-        if (player.placement === 1) placement = "first";
-        if (player.placement === 2) placement = "second";
-        if (player.placement === 3) placement = "third";
+        if (player.score[i] > player.score[i - 1]) right = true;
+
+        if (player.placements[i - 1] === 1) placement = "first";
+        if (player.placements[i - 1] === 2) placement = "second";
+        if (player.placements[i - 1] === 3) placement = "third";
 
         const rowObject: RowObject = {
           score: player.score[i],
           placement,
-          right: player.rightAnswer,
+          right,
           round: i,
+          id,
         };
         row.push(rowObject);
       });
@@ -66,15 +72,19 @@ const Scoreboard = () => {
         <tbody>
           <tr>
             {firstRow.map((row) => {
-              return <th>{row}</th>;
+              return <th key={row}>{row}</th>;
             })}
           </tr>
 
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 {row.map((el) => {
-                  return <td className={el.placement}>{el.score}</td>;
+                  return (
+                    <td key={el.id} className={el.placement}>
+                      {el.score}
+                    </td>
+                  );
                 })}
               </tr>
             );

@@ -1,0 +1,17 @@
+.back-button {
+  position: fixed;
+  top: 5.2vh;
+  right: 8.2vw;
+  color: antiquewhite;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #464eb8;
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+
+  &:hover {
+    background-color: antiquewhite;
+    color: #464eb8;
+  }
+}

@@ -5,9 +5,10 @@
   --red-color: #ff3131;
   --white-color: #faebd7;
   --iris-color: #505ac9;
+  --modal-bg-color: #191919;
 }
 
-/* body {
+/* body { 
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
