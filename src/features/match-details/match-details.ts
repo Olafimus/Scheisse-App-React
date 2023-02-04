@@ -7,6 +7,8 @@ export interface MatchPlayer {
   score: Array<number>;
   stiche: Array<number>;
   placements: Array<number>;
+  placement?: number;
+  right?: boolean;
 }
 
 export interface Match {
@@ -16,6 +18,7 @@ export interface Match {
   giver?: string;
   id?: string;
   matchRef?: string;
+  startedAt?: number;
 }
 
 export const createMatchDetail = (
@@ -23,7 +26,8 @@ export const createMatchDetail = (
   roundNumber: number,
   finished: boolean,
   giver: string,
-  id: string
+  id: string,
+  startedAt: number
 ) => {
   const matchPlayers: Array<MatchPlayer> = [];
 
@@ -43,6 +47,7 @@ export const createMatchDetail = (
     finished,
     giver,
     id,
+    startedAt,
   };
   console.log("matchdetails: ", match);
   return match;

@@ -19,6 +19,8 @@ import {
   collection,
   updateDoc,
 } from "firebase/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
+
 import { Match } from "../match-details/match-details";
 
 const firebaseConfig = {
@@ -104,6 +106,7 @@ export const addMatch = async ({
   finished,
   giver,
   id,
+  startedAt,
 }) =>
   await addDoc(matchCollectionRef, {
     matchPlayers,
@@ -111,6 +114,7 @@ export const addMatch = async ({
     finished,
     giver,
     id,
+    startedAt,
   });
 
 export const updateMatch = async (
@@ -145,3 +149,8 @@ export const getUsers = async () => {
   const data = await getDocs(usersCollectionRef);
   return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
+
+export const useMatchListener = (matchRef) =>
+  useDocument(doc(matchCollectionRef, matchRef), {
+    snapshotListenOptions: { includeMetadataChanges: true },
+  });

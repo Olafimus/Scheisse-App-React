@@ -25,7 +25,7 @@ import "./main.route.styles.scss";
 const MainRoute = () => {
   const dispatch = useAppDispatch();
   const [matches, setMatches] = useState<Array<Match>>([]);
-  const { started, roundNumber, finished, matchId } = useAppSelector(
+  const { started, startedAt, roundNumber, finished, matchId } = useAppSelector(
     (state) => state.gamePara
   );
   const { players, giver } = useAppSelector((state) => state.player);
@@ -47,7 +47,8 @@ const MainRoute = () => {
       roundNumber,
       finished,
       giver,
-      matchId
+      matchId,
+      startedAt
     );
 
     const loadMatches = async () => {
@@ -56,12 +57,11 @@ const MainRoute = () => {
       const arr: Array<Match> = [...test];
       const currentMatch = arr.find((el) => el.id === matchId);
       console.log("all", arr, "matchId", matchId);
-      console.log(currentMatch);
+      console.log("currentmatch", currentMatch);
       updateMatch(currentMatch?.matchRef, match);
     };
-    if (!finished) loadMatches();
-    console.log("main: ", matches);
-  }, [players]);
+    loadMatches();
+  }, [players, finished]);
 
   // add Match to Users
   useEffect(() => {
@@ -78,7 +78,7 @@ const MainRoute = () => {
           <RoundStats />
           <PlayerList />
 
-          <MidgameButtons />
+          {!finished && <MidgameButtons />}
         </>
       ) : (
         <>

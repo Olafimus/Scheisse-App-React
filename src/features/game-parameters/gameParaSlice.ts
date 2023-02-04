@@ -14,6 +14,7 @@ interface gameState {
   reset: boolean;
   finished: boolean;
   matchId: string;
+  startedAt: number;
 }
 
 const initialState: gameState = {
@@ -29,6 +30,7 @@ const initialState: gameState = {
   reset: false,
   finished: false,
   matchId: "",
+  startedAt: 0,
 };
 
 const calcMaxRound = (amountCards: number, playerNumber: number) => {
@@ -40,8 +42,9 @@ export const gameParaSlice = createSlice({
   name: "game State",
   initialState,
   reducers: {
-    startGame: (state) => {
+    startGame: (state, { payload }) => {
       state.started = true;
+      state.startedAt = payload;
       state.matchId = nanoid().slice(-5);
     },
     createMatchId: (state, { payload }) => {

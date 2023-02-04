@@ -1,0 +1,23 @@
+.watch-player-list {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 1000px;
+  // background-color: grey;
+  font-size: 20px;
+  font-weight: 600;
+  .watch-player-box {
+    display: grid;
+    grid-template-columns: 10% 50% 20% 20%;
+    background-color: rgb(68, 68, 68);
+    height: 2.8rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .right {
+    background-color: rgb(0, 92, 75);
+  }
+  .wrong {
+    background-color: #9b0000;
+  }
+}

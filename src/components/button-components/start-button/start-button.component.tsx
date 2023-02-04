@@ -21,8 +21,9 @@ const StartButton = () => {
   const { players, giver } = useAppSelector((state) => state.player);
   const nameInput = React.useRef<HTMLInputElement>(null);
 
-  const startGameHandler = () => {
-    dispatch(startGame());
+  const startGameHandler = async () => {
+    const startedAt = Date.now();
+    dispatch(startGame(startedAt));
     dispatch(setGiver(0));
 
     const matchId = nanoid().slice(-5);
@@ -31,7 +32,8 @@ const StartButton = () => {
       roundNumber,
       finished,
       giver,
-      matchId
+      matchId,
+      startedAt
     );
     dispatch(createMatchId(matchId));
 

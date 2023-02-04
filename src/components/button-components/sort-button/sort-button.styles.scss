@@ -1,7 +1,14 @@
 .sort-button-container {
-  color: white;
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  top: -10vh;
+  left: 8vh;
+  // right: 10vh;
+  // bottom: 87vh;
+  display: inline-block;
   width: 100px;
   margin-top: 100px;
+  z-index: 1;
+  option {
+    z-index: 1;
+  }
 }
