@@ -5,7 +5,10 @@ import "./DropdownMenu.styles.scss";
 
 export interface IDropProps {
   children?: React.ReactNode;
-  func?: () => void;
+  count?: number;
+  stayOpen?: boolean;
+  val?: { name: string; id: string };
+  func?: (val?: { name: string; id: string }) => void;
 }
 
 const DropdownMenu: React.FC<IDropProps> = ({ children }) => {

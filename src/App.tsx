@@ -14,15 +14,19 @@ import Home from "./routes/home-route/Home";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/game" element={<MainRoute />} />
-      <Route path="scoreboard" element={<ScoreboardRoute />} />
-      <Route path="ceremony" element={<CeremonyRoute />} />
-      <Route path="/users" element={<UsersRoute />} />
-      <Route path="/statistics" element={<Statistics />} />
-      <Route path="/settings" element={<SettingsRoute />} />
-      <Route path="/matchspec" element={<MatchSpecRoute />} />
-      <Route path="/matchspec/match/:matchRef" element={<MatchWatch />} />
+      <Route index element={<Home />} />
+      <Route path="users" element={<UsersRoute />} />
+      <Route path="game">
+        <Route index element={<MainRoute />} />
+        <Route path="scoreboard" element={<ScoreboardRoute />} />
+        <Route path="ceremony" element={<CeremonyRoute />} />
+        <Route path="statistics" element={<Statistics />} />
+        <Route path="settings" element={<SettingsRoute />} />
+      </Route>
+      <Route>
+        <Route path="/matchspec" element={<MatchSpecRoute />} />
+        <Route path="/matchspec/match/:matchRef" element={<MatchWatch />} />
+      </Route>
     </Routes>
   );
 }

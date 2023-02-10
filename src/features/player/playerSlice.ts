@@ -9,6 +9,7 @@ export interface playerState {
   giverIndex: number;
   giver: string;
   sortMode: string;
+  reset: boolean;
 }
 
 const initialState: playerState = {
@@ -18,6 +19,7 @@ const initialState: playerState = {
   giverIndex: 0,
   giver: "",
   sortMode: "none",
+  reset: false,
 };
 
 const handleCheck = (
@@ -64,7 +66,12 @@ export const counterSlice = createSlice({
         placementCounts: {},
         position: 0,
       };
-      state.players.push(player);
+      const player2 = {
+        ...freshPlayer,
+        name: payload.name,
+        playerId: payload.id,
+      };
+      state.players.push(player2);
     },
     setRight: (state, { payload }) => {
       let check = handleCheck(state.players, payload.playerId, true);
@@ -208,6 +215,15 @@ export const counterSlice = createSlice({
     deletePlayer: (state, { payload }) => {
       state.players.splice(payload, 1);
     },
+    resetRound: (state) => {
+      state.players.forEach((pl) => {
+        pl.currentStich = 0;
+        pl.rightAnswer = false;
+        pl.checked = false;
+      });
+      state.allChecked = false;
+      state.reset = !state.reset;
+    },
   },
 });
 
@@ -228,5 +244,6 @@ export const {
   movePlayerUp,
   movePlayerDown,
   deletePlayer,
+  resetRound,
 } = counterSlice.actions;
 export default counterSlice.reducer;

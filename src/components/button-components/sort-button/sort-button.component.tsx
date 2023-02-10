@@ -27,7 +27,7 @@ const SortButton = () => {
     <div className="sort-button-container">
       <DropdownMenu>
         <DropdownButton>Sort</DropdownButton>
-        <DropdownOptions>
+        <DropdownOptions count={2}>
           <DropdownOption func={placeSort}>Sort by Placement</DropdownOption>
           <DropdownOption func={giveSort}>Sort by Card Giver</DropdownOption>
         </DropdownOptions>

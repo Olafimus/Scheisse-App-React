@@ -8,9 +8,7 @@ const DropdownButton: React.FC<IDropProps> = ({ children }) => {
       className="dropdown-button"
       // style={{ backgroundColor: "red" }}
       onClick={(e) => {
-        // const dropOptions = e.currentTarget.nextSibling;
-        const dropOptions = document.querySelector(".dropdown-options");
-
+        const dropOptions = e.currentTarget.nextElementSibling;
         dropOptions?.classList.toggle("active");
       }}
     >

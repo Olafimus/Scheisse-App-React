@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import AddPlayers from "../../components/button-components/add-player-button/AddPlayers";
 import MidgameButtons from "../../components/button-components/midgame-buttons/midgame-buttons.component";
 import SortButton from "../../components/button-components/sort-button/sort-button.component";
 import StartButton from "../../components/button-components/start-button/start-button.component";
@@ -74,17 +75,26 @@ const MainRoute = () => {
       <Settings />
       {started ? (
         <>
-          <SortButton />
-          <RoundStats />
+          <header>
+            <SortButton />
+            <RoundStats />
+          </header>
           <PlayerList />
 
-          {!finished && <MidgameButtons />}
+          <MidgameButtons />
         </>
       ) : (
         <>
           {/* <RoundStats /> */}
-          <StartList />
-          <StartButton />
+          <div className="">
+            <main>
+              <AddPlayers />
+              <StartList />
+            </main>
+            <footer>
+              <StartButton />
+            </footer>
+          </div>
         </>
       )}
     </div>

@@ -14,10 +14,10 @@ const AllMatches: React.FC<IMatchSpecProps> = ({
     setShowActive(false);
   };
   return (
-    <div>
+    <>
       <button onClick={clickHandler}>Show All Matches</button>
-      {showAll && <MatchList matches={allMatches} />}
-    </div>
+      <div>{showAll && <MatchList matches={allMatches} />}</div>
+    </>
   );
 };
 

@@ -140,7 +140,7 @@ const StartList = () => {
       {players.map((pl, i) => (
         <div className="player-start-box">
           <p>{pl.name}</p>
-          <div>{buttonBox(i)}</div>
+          <div className="start-list-button-container">{buttonBox(i)}</div>
           <button onClick={() => dispatch(deletePlayer(i))}>X</button>
         </div>
       ))}

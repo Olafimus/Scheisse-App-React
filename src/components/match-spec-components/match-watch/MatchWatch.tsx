@@ -4,6 +4,7 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../../../features/firebase/firebase";
 import { Match } from "../../../features/match-details/match-details";
+import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 
 import "./MatchWatch.styles.scss";
 import WatchPlayerBox from "./watch-player-box/WatchPlayerBox";
@@ -37,15 +38,7 @@ const MatchWatch = () => {
 
   return (
     <div className="match-watch-container">
-      MatchWatch {matchRef}
-      <button
-        onClick={() => {
-          console.log(typeof matchRef);
-          console.log(value?.data(), loading, error);
-        }}
-      >
-        test
-      </button>
+      <HomeIcon />
       <div className="s">
         {loading ? <span>loading</span> : <WatchPlayerBox match={match} />}
       </div>

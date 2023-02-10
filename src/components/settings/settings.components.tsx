@@ -35,12 +35,17 @@ const Settings = () => {
         <>
           <br />
           <div className="hidden dropdown-reiter" id="dropdown--reiter">
-            <Link to={"/scoreboard"}>
+            <Link to={"/"}>
+              <button id="score-btn">
+                <p>Home</p>
+              </button>
+            </Link>
+            <Link to={"/game/scoreboard"}>
               <button id="score-btn">
                 <p>Scoreboard</p>
               </button>
             </Link>
-            <Link to={"/statistics"}></Link>
+            <Link to={"/game/statistics"}></Link>
             {/* <Link to={"/settings"}>
               <button
               id="settings-button"
@@ -69,9 +74,9 @@ const Settings = () => {
               Settings
             </button>
             {/* <span id="drop-space"></span> */}
-            <Link to={"/ceremony"}>
+            {/* <Link to={"/game/ceremony"}>
               <button>Ceremony</button>
-            </Link>
+            </Link> */}
             <button
               id="new-round-button"
               onClick={() => {
@@ -82,16 +87,18 @@ const Settings = () => {
             >
               Noch ein Match
             </button>
-            <button
-              id="restart-button"
-              onClick={() => {
-                setShowSettings(!showSettings);
-                dispatch(restartAppPlayers());
-                dispatch(restartAppParas());
-              }}
-            >
-              App Neustart
-            </button>
+            <Link to={"/"}>
+              <button
+                id="restart-button"
+                onClick={() => {
+                  setShowSettings(!showSettings);
+                  dispatch(restartAppPlayers());
+                  dispatch(restartAppParas());
+                }}
+              >
+                App Neustart
+              </button>
+            </Link>
           </div>
         </>
       )}

@@ -147,7 +147,12 @@ export const createUser = async (name, id) => {
 
 export const getUsers = async () => {
   const data = await getDocs(usersCollectionRef);
-  return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  return data.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.data().id,
+    name: doc.data().name,
+    ref: doc.id,
+  }));
 };
 
 export const useMatchListener = (matchRef) =>

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+
 import "./MatchSpecRoute.styles.scss";
-import AchtiveMatches from "../../components/match-spec-components/ActiveMatches/AchtiveMatches";
-import AllMatches from "../../components/match-spec-components/AllMatches/AllMatches";
 import { getMatches } from "../../features/firebase/firebase";
 import { Match } from "../../features/match-details/match-details";
+import MatchList from "../../components/match-spec-components/MatchList/MatchList";
+import { Link } from "react-router-dom";
+import HomeIcon from "../../components/genereal-components/Home-Icon/HomeIcon";
 
 export interface IMatchSpecProps {
   showActive: boolean;
   setShowActive: React.Dispatch<React.SetStateAction<boolean>>;
+
   showAll: boolean;
   setShowAll: React.Dispatch<React.SetStateAction<boolean>>;
   allMatches?: Array<Match>;
@@ -16,7 +19,7 @@ export interface IMatchSpecProps {
 const MatchSpecRoute = () => {
   const [showActive, setShowActive] = useState(false);
   const [showAll, setShowAll] = useState(false);
-  const [activeMatches, setActiveMatches] = useState<Array<Match>>([]);
+  // const [activeMatches, setActiveMatches] = useState<Array<Match>>([]);
   const [allMatches, setAllMatches] = useState<Array<Match>>([]);
   const props = {
     showActive,
@@ -43,12 +46,35 @@ const MatchSpecRoute = () => {
     loadMatches();
   }, []);
 
+  const showActiveHandler = () => {
+    setShowActive(!showActive);
+    setShowAll(false);
+  };
+  const showAllHandler = () => {
+    setShowAll(!showAll);
+    setShowActive(false);
+  };
+
+  const activeMatches = allMatches
+    ?.filter((el) => el.finished === false)
+    .sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
+
   return (
-    <div>
+    <div className="match-spec-body">
+      <HomeIcon />
       <h2>Find your Match</h2>
+      <button className="match-select-button" onClick={showActiveHandler}>
+        Active Matches
+      </button>
+      <button className="match-select-button" onClick={showAllHandler}>
+        All Matches
+      </button>
       <div className="match-selection">
-        <AchtiveMatches {...props} />
-        <AllMatches {...props} />
+        {showActive && <MatchList matches={activeMatches} />}
+        {showAll && <MatchList matches={allMatches} />}
+        {/* <AchtiveMatches {...props} /> */}
+
+        {/* <AllMatches {...props} /> */}
       </div>
     </div>
   );

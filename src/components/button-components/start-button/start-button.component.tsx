@@ -42,7 +42,7 @@ const StartButton = () => {
 
   return (
     <div className="start-buttons">
-      <div className="add-container">
+      {/* <div className="add-container">
         <input
           type="text"
           placeholder="Dein Name"
@@ -66,7 +66,7 @@ const StartButton = () => {
         >
           <span id="add-plus">+</span>
         </button>
-      </div>
+      </div> */}
 
       <button id="start-game" onClick={startGameHandler}>
         Start Game

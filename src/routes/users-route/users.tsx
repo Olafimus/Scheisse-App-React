@@ -10,8 +10,8 @@ interface User {
 }
 
 const UsersRoute = () => {
-  const [users, setUsers] = useState<Array<User>>([]);
   const [name, setName] = useState("");
+  const [users, setUsers] = useState<Array<User>>([]);
 
   useEffect(() => {
     let test = [];

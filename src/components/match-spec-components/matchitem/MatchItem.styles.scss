@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 15% 55% 15% 15%;
   margin: 0.2rem;
+  width: 100%;
+
   // min-height: 30px;
   // max-height: 50px;
   .match-item-players {
@@ -15,6 +17,10 @@
       white-space: nowrap;
     }
   }
+}
+
+.match-item-header {
+  padding-bottom: 0.2rem;
 }
 
 .match-item-divider {

@@ -2,6 +2,40 @@
   background-color: rgb(35, 35, 35);
   display: flex;
   flex-direction: column;
-  min-width: 600px;
+  width: 90%;
+  min-width: 390px;
+
+  // min-width: 600px;
   max-width: 1000px;
+
+  .match-item-list {
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
+    // cursor: pointer;
+    &:hover {
+      background-color: rgb(45, 45, 45);
+    }
+    &:nth-child(odd) {
+      background-color: rgba(0, 202, 253, 0.15);
+      &:hover {
+        background-color: rgba(0, 202, 253, 0.3);
+      }
+    }
+  }
+
+  input {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    width: 90%;
+    align-self: center;
+    font-size: 18px;
+    text-align: center;
+    background-color: rgb(12, 137, 95);
+    color: white;
+    &::placeholder {
+      color: rgba(245, 245, 5, 0.733);
+    }
+  }
 }

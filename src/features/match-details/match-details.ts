@@ -13,6 +13,7 @@ export interface MatchPlayer {
 
 export interface Match {
   matchPlayers?: Array<MatchPlayer>;
+  playerNames?: Array<string>;
   roundNumber?: number;
   finished?: boolean;
   giver?: string;

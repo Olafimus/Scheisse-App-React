@@ -17,7 +17,9 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ setShow, children }) => {
   return (
     <div className="modal-footer">
       {children}
-      <button onClick={handleClose}>close</button>
+      <button className="close-button" onClick={handleClose}>
+        Close
+      </button>
     </div>
   );
 };

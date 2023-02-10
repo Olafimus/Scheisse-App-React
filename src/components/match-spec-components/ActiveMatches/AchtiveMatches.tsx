@@ -9,20 +9,20 @@ const AchtiveMatches: React.FC<IMatchSpecProps> = ({
   setShowAll,
   allMatches,
 }) => {
-  const clickHandler = () => {
-    setShowActive(!showActive);
-    setShowAll(false);
-  };
+  // const clickHandler = () => {
+  //   setShowActive(!showActive);
+  //   setShowAll(false);
+  // };
 
-  const activeMatches = allMatches
-    ?.filter((el) => el.finished === false)
-    .sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
+  // const activeMatches = allMatches
+  //   ?.filter((el) => el.finished === false)
+  //   .sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
 
   return (
-    <div>
-      <button onClick={clickHandler}>Active Matches</button>
-      {showActive && <MatchList matches={activeMatches} />}
-    </div>
+    <>
+      {/* <button onClick={clickHandler}>Active Matches</button> */}
+      {/* <div>{showActive && <MatchList matches={activeMatches} />}</div> */}
+    </>
   );
 };
 

@@ -1,3 +1,7 @@
+:root {
+  --option-count: 2;
+}
+
 .dropdown-menu {
   display: flex;
   flex-direction: column;
@@ -39,7 +43,8 @@
     }
   }
   .active {
-    max-height: 10rem;
+    max-height: calc(2rem * var(--option-count));
+    overflow: hidden;
   }
   // .active
   // .dropdown-button {

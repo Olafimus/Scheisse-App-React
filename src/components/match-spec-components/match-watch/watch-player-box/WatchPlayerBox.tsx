@@ -53,7 +53,10 @@ const WatchPlayerBox: React.FC<Iprops> = ({ match }) => {
   return (
     <div>
       <section>
-        <h3>Round: {match.roundNumber}</h3>
+        <div className="watch-header">
+          <h2>Round: {match.roundNumber}</h2>
+          <h3>Giver: {match.giver}</h3>
+        </div>
       </section>
       <section>
         <div className="watch-player-list">
