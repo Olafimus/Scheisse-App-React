@@ -46,32 +46,12 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     addPlayer: (state, { payload }) => {
-      const player: Iplayer = {
-        name: payload.name,
-        currentScore: 0,
-        score: [0],
-        currentStich: 0,
-        stiche: [],
-        checked: false,
-        rightAnswer: false,
-        placement: undefined,
-        placements: [],
-        stichHistory: [],
-        playerId: payload.id,
-        currentWinStreak: 0,
-        maxWinStreak: 0,
-        currentLoseStreak: 0,
-        maxLoseStreak: 0,
-        firstPlacement: 0,
-        placementCounts: {},
-        position: 0,
-      };
-      const player2 = {
+      const player = {
         ...freshPlayer,
         name: payload.name,
         playerId: payload.id,
       };
-      state.players.push(player2);
+      state.players.push(player);
     },
     setRight: (state, { payload }) => {
       let check = handleCheck(state.players, payload.playerId, true);
@@ -108,7 +88,6 @@ export const counterSlice = createSlice({
       });
 
       currentScores.sort((a, b) => b - a);
-      console.log("scores: ", currentScores);
       state.players.forEach((player) => {
         for (let i = payload; i >= 0; i--) {
           if (player.currentScore === currentScores[i - 1]) {
@@ -177,7 +156,6 @@ export const counterSlice = createSlice({
     },
     sortPlayers: (state) => {
       if (state.sortMode === "giver") {
-        console.log("giver");
         state.players.sort((a, b) => a.position - b.position);
         if (state.giverIndex > 0) {
           const currentGiver = state.players.find(
@@ -191,11 +169,9 @@ export const counterSlice = createSlice({
       }
 
       if (state.sortMode === "placement") {
-        console.log("giver");
         state.players.sort((a, b) => {
           if (!a.placement) a.placement = 0;
           if (!b.placement) b.placement = 0;
-          console.log("fire");
           return a.placement - b.placement;
         });
       }
@@ -224,6 +200,31 @@ export const counterSlice = createSlice({
       state.allChecked = false;
       state.reset = !state.reset;
     },
+    calcStatistics: (state, { payload }) => {
+      state.players.forEach((pl) => {
+        const index = pl.score.length - 1;
+
+        if (pl.score[index] > pl.score[index - 1]) {
+          pl.statistics.onWinStreak = true;
+          pl.statistics.winStreak++;
+          pl.statistics.loseStreak = 0;
+          if (pl.statistics.winStreak > pl.statistics.maxWinStreak)
+            pl.statistics.maxWinStreak = pl.statistics.winStreak;
+          if (pl.stichHistory[index] > pl.statistics.maxWonStiche)
+            pl.statistics.maxWonStiche = pl.stichHistory[index];
+        } else {
+          pl.statistics.onWinStreak = false;
+          pl.statistics.winStreak = 0;
+          pl.statistics.loseStreak++;
+          if (pl.statistics.loseStreak > pl.statistics.maxLoseStreak)
+            pl.statistics.maxLoseStreak = pl.statistics.loseStreak;
+        }
+        if (pl.stichHistory[index] > pl.statistics.maxCalledStiche)
+          pl.statistics.maxCalledStiche = pl.stichHistory[index];
+        if (pl.placement === 1) pl.statistics.firstPlaces++;
+        if (pl.placement === payload) pl.statistics.lastPlaces++;
+      });
+    },
   },
 });
 
@@ -234,6 +235,7 @@ export const {
   setAllAnswers,
   setCurrentStiche,
   sumScore,
+  calcStatistics,
   setSortMode,
   sortPlayers,
   restartAppPlayers,

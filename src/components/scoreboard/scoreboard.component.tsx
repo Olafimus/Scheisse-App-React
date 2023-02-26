@@ -55,14 +55,11 @@ const Scoreboard = () => {
       rows.push(row);
     }
     setRows(rows);
-    console.log(rows);
   };
 
   useEffect(() => {
-    console.log("row-start");
     createFirstRow();
     createRows();
-    console.log("row-end", firstRow);
   }, [roundNumber, started, finished]);
 
   return (

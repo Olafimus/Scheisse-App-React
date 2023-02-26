@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo/logo_transparent.png";
 import watchImage from "../../assets/pictures/binoculars2.png";
 import playImage from "../../assets/pictures/cards.svg";
+import statImage from "../../assets/pictures/statistic.svg";
 
 const Home = () => {
   return (
@@ -26,6 +27,14 @@ const Home = () => {
               style={{ backgroundImage: `url(${watchImage})` }}
             >
               <h2>Watch</h2>
+            </div>
+          </Link>
+          <Link to="/statistics">
+            <div
+              className="game-mode-box"
+              style={{ backgroundImage: `url(${statImage})` }}
+            >
+              <h2>Statistics</h2>
             </div>
           </Link>
         </div>

@@ -10,6 +10,10 @@ import UsersRoute from "./routes/users-route/users";
 import MatchSpecRoute from "./routes/match-spectator-route/MatchSpecRoute";
 import MatchWatch from "./components/match-spec-components/match-watch/MatchWatch";
 import Home from "./routes/home-route/Home";
+import MatchStatistics from "./components/statistic-components/current-match/CurrentMatchStatistics";
+import PlayerStatistics from "./components/statistic-components/player-statistics/PlayerStatistics";
+import AllMatchStatistics from "./components/statistic-components/all-matches/AllMatchStatistics";
+import LocalStatistics from "./components/statistic-components/local-statistics/LocalStatistics";
 
 function App() {
   return (
@@ -20,12 +24,23 @@ function App() {
         <Route index element={<MainRoute />} />
         <Route path="scoreboard" element={<ScoreboardRoute />} />
         <Route path="ceremony" element={<CeremonyRoute />} />
-        <Route path="statistics" element={<Statistics />} />
+        {/* <Route path="statistics" element={<Statistics />} /> */}
         <Route path="settings" element={<SettingsRoute />} />
+        <Route path="statistics" element={<MatchStatistics />} />
       </Route>
-      <Route>
-        <Route path="/matchspec" element={<MatchSpecRoute />} />
-        <Route path="/matchspec/match/:matchRef" element={<MatchWatch />} />
+      <Route path="/matchspec">
+        <Route index element={<MatchSpecRoute />} />
+        <Route path="match/:matchRef" element={<MatchWatch />} />
+      </Route>
+      <Route path="statistics">
+        <Route index element={<Statistics />} />
+        <Route path="currentmatch" element={<MatchStatistics />} />
+        <Route path="matches">
+          <Route index element={<AllMatchStatistics />} />
+          <Route path="match/:matchRef" element={<AllMatchStatistics />} />
+        </Route>
+        <Route path="players" element={<PlayerStatistics />} />
+        <Route path="localstats" element={<LocalStatistics />} />
       </Route>
     </Routes>
   );

@@ -27,11 +27,11 @@ const StartList = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 330 330"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
@@ -55,11 +55,11 @@ const StartList = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 330 330"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
@@ -90,8 +90,8 @@ const StartList = () => {
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
@@ -118,8 +118,8 @@ const StartList = () => {
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
@@ -138,7 +138,7 @@ const StartList = () => {
   return (
     <div className="player-start-list">
       {players.map((pl, i) => (
-        <div className="player-start-box">
+        <div key={pl.playerId} className="player-start-box">
           <p>{pl.name}</p>
           <div className="start-list-button-container">{buttonBox(i)}</div>
           <button onClick={() => dispatch(deletePlayer(i))}>X</button>

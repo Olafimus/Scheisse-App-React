@@ -57,17 +57,18 @@ const Settings = () => {
               Settings
               </button>
             </Link> */}
-            <button
-              id="statistics-button"
-              onClick={() => setShowSettings(!showSettings)}
-            >
-              Statistiken
-            </button>
+            <Link to={"/game/statistics"}>
+              <button
+                id="statistics-button"
+                onClick={() => setShowSettings(!showSettings)}
+              >
+                Statistiken
+              </button>
+            </Link>
             <button
               id="settings-button"
               onClick={() => {
                 setShowGameSettings(true);
-                console.log(showGameSettings);
                 setShowSettings(!showSettings);
               }}
             >

@@ -18,6 +18,9 @@ import {
   getDocs,
   collection,
   updateDoc,
+  query,
+  where,
+  arrayUnion,
 } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 
@@ -142,7 +145,8 @@ export const getMatches = async () => {
 
 export const createUser = async (name, id) => {
   const matches = [];
-  await addDoc(usersCollectionRef, { name, id, matches });
+  const placements = [];
+  await addDoc(usersCollectionRef, { name, id, matches, placements });
 };
 
 export const getUsers = async () => {
@@ -159,3 +163,27 @@ export const useMatchListener = (matchRef) =>
   useDocument(doc(matchCollectionRef, matchRef), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
+
+export const addMatchToUser = async (user, matchId, placement) => {
+  const q = query(usersCollectionRef, where("name", "==", user));
+  const querySnapshot = await getDocs(q);
+  let ref = "";
+
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    ref = doc.id;
+
+    // updateDoc(doc(db, "users", doc.id), { matches: arrayUnion("test") });
+  });
+  const userRef = doc(db, "users", ref);
+  // await updateDoc(userRef, { matches: [] });
+  // await updateDoc(userRef, { placements: [] });
+
+  const placeObj = { matchId, placement };
+
+  await updateDoc(userRef, {
+    matches: arrayUnion(matchId),
+    placements: arrayUnion(placeObj),
+  });
+};

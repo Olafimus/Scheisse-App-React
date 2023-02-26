@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const BackButton = () => {
   return (
-    <Link to={"/game"}>
+    <Link to={".."}>
       <button className="back-button">Go Back</button>
     </Link>
   );

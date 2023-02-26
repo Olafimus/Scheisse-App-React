@@ -13,6 +13,7 @@ import {
   setAllAnswers,
   sortPlayers,
   sumScore,
+  calcStatistics,
 } from "../../../features/player/playerSlice";
 import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 import "./midgame-buttons.styles.scss";
@@ -29,6 +30,7 @@ const MidgameButtons = () => {
   const nextRound = () => {
     if (!finished && allChecked) {
       dispatch(sumScore(playerNumber));
+      dispatch(calcStatistics(playerNumber));
       dispatch(nextGiver());
       dispatch(sortPlayers());
 
@@ -37,7 +39,6 @@ const MidgameButtons = () => {
         dispatch(calcMaxStiche());
       }
       if (roundNumber === endRound) dispatch(endGame());
-      console.log(allChecked);
     } else if (finished) navigate("/ceremony");
   };
 

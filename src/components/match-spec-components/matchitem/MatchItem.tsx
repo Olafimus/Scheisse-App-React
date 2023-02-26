@@ -5,20 +5,19 @@ import { Match } from "../../../features/match-details/match-details";
 
 interface Iprops {
   match: Match;
+  clickHandler?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
 }
 
-const MatchItem = ({ match }: Iprops) => {
+const MatchItem = ({ match, clickHandler }: Iprops) => {
   const names: Array<string> = [];
   match.matchPlayers?.forEach((pl) => names.push(pl.name));
   let date;
   if (match.startedAt != undefined) {
     date = new Date(match.startedAt || 0);
-
-    console.log(date);
   }
 
   return (
-    <div className="match-item">
+    <div className="match-item" onClick={clickHandler}>
       <p>{match.id}</p>
       <div className="match-item-players">
         <p>{match.matchPlayers?.length}</p>

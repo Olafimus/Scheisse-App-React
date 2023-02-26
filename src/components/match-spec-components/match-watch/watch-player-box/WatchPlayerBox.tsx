@@ -33,26 +33,9 @@ const WatchPlayerBox: React.FC<Iprops> = ({ match }) => {
     }
   }, [match]);
 
-  // useEffect(() => {
-  //   console.log("players on load:", players);
-  //   players.forEach((pl) => {
-  //     pl.placement = pl.placements.at(-1);
-
-  //     if ((pl.score.at(-1) || 0) > (pl.score.at(-2) || 0)) pl.right = true;
-  //     else pl.right = false;
-  //   });
-  //   players.sort((a, b) => {
-  //     if (!a.placement) a.placement = 0;
-  //     if (!b.placement) b.placement = 0;
-
-  //     return a.placement - b.placement;
-  //   });
-  //   setPlayers(players);
-  // }, [players]);
-
   return (
     <div>
-      <section>
+      <section className="watch-box-section">
         <div className="watch-header">
           <h2>Round: {match.roundNumber}</h2>
           <h3>Giver: {match.giver}</h3>

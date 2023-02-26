@@ -13,7 +13,6 @@ const CeremonyRoute = () => {
 
   useEffect(() => {
     let sorted = [...players];
-    console.log("sorted: ", sorted);
     sorted.sort((a, b) => {
       if (!a.placement) a.placement = 0;
       if (!b.placement) b.placement = 0;
@@ -41,10 +40,7 @@ const CeremonyRoute = () => {
     <>
       <BackButton />
       {check && (
-        <div
-          className="podest-table"
-          onClick={() => console.log(sortedPlayers)}
-        >
+        <div className="podest-table">
           <div className="treppchen-container">
             <div className="podest-with-name">
               <div className="name" id="name-place2">

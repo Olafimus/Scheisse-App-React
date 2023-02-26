@@ -41,7 +41,6 @@ const MatchSpecRoute = () => {
     const loadMatches = async () => {
       const matches = await getMatches();
       setAllMatches(matches);
-      console.log(matches);
     };
     loadMatches();
   }, []);
@@ -70,8 +69,8 @@ const MatchSpecRoute = () => {
         All Matches
       </button>
       <div className="match-selection">
-        {showActive && <MatchList matches={activeMatches} />}
-        {showAll && <MatchList matches={allMatches} />}
+        {showActive && <MatchList link="match" matches={activeMatches} />}
+        {showAll && <MatchList link="match" matches={allMatches} />}
         {/* <AchtiveMatches {...props} /> */}
 
         {/* <AllMatches {...props} /> */}

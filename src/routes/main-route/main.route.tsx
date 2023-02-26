@@ -10,9 +10,14 @@ import RoundStats from "../../components/round-stat-component/round-stat.compone
 import Settings from "../../components/settings/settings.components";
 import {
   addMatch,
+  addMatchToUser,
   getMatches,
   updateMatch,
 } from "../../features/firebase/firebase";
+import {
+  addMatchToHist,
+  resetHistory,
+} from "../../features/game-history/gameHistorySlice";
 import {
   setCalledStiche,
   setPlayerNumber,
@@ -29,7 +34,18 @@ const MainRoute = () => {
   const { started, startedAt, roundNumber, finished, matchId } = useAppSelector(
     (state) => state.gamePara
   );
+  const { playedMatches } = useAppSelector((state) => state.gameHistory);
   const { players, giver } = useAppSelector((state) => state.player);
+  const buildMatch = () => {
+    return createMatchDetail(
+      players,
+      roundNumber,
+      finished,
+      giver,
+      matchId,
+      startedAt
+    );
+  };
 
   // displaying stiche in RoundStats
   useEffect(() => {
@@ -43,6 +59,7 @@ const MainRoute = () => {
 
   // update Match in DB
   useEffect(() => {
+    if (!started) return;
     const match = createMatchDetail(
       players,
       roundNumber,
@@ -57,8 +74,6 @@ const MainRoute = () => {
       test = await getMatches();
       const arr: Array<Match> = [...test];
       const currentMatch = arr.find((el) => el.id === matchId);
-      console.log("all", arr, "matchId", matchId);
-      console.log("currentmatch", currentMatch);
       updateMatch(currentMatch?.matchRef, match);
     };
     loadMatches();
@@ -66,8 +81,21 @@ const MainRoute = () => {
 
   // add Match to Users
   useEffect(() => {
-    if (finished) {
-    }
+    if (!started) return;
+
+    players.forEach((pl) => {
+      addMatchToUser(pl.name, matchId, pl.placement);
+    });
+  }, [started]);
+
+  // add Match to Game History
+
+  useEffect(() => {
+    if (!finished) return;
+    const match = buildMatch();
+    const matches = playedMatches.filter((m) => m.id === matchId);
+    if (!matches.length) dispatch(addMatchToHist(match));
+    // dispatch(resetHistory());
   }, [finished]);
 
   return (
@@ -86,12 +114,12 @@ const MainRoute = () => {
       ) : (
         <>
           {/* <RoundStats /> */}
-          <div className="">
-            <main>
+          <div className="before-started-container">
+            <main className="configure-players-container">
               <AddPlayers />
               <StartList />
             </main>
-            <footer>
+            <footer className="start-buttons-container">
               <StartButton />
             </footer>
           </div>

@@ -1,4 +1,4 @@
-import { Iplayer } from "../player/playerInterface";
+import { Iplayer, Istatistics } from "../player/playerInterface";
 import { nanoid } from "@reduxjs/toolkit";
 import { setDoc } from "firebase/firestore";
 
@@ -9,6 +9,7 @@ export interface MatchPlayer {
   placements: Array<number>;
   placement?: number;
   right?: boolean;
+  statistics?: Istatistics;
 }
 
 export interface Match {
@@ -33,13 +34,14 @@ export const createMatchDetail = (
   const matchPlayers: Array<MatchPlayer> = [];
 
   players.forEach((pl) => {
-    const { name, score, stichHistory, placements } = pl;
+    const { name, score, stichHistory, placements, statistics } = pl;
 
     matchPlayers.push({
       name,
       score,
       stiche: stichHistory,
       placements,
+      statistics,
     });
   });
   const match = {
@@ -50,7 +52,6 @@ export const createMatchDetail = (
     id,
     startedAt,
   };
-  console.log("matchdetails: ", match);
   return match;
 };
 

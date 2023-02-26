@@ -1,0 +1,195 @@
+:root {
+  --add-button-color: red;
+  --create-button-width: 215px;
+  --create-button-heigth: 35px;
+  --box-border-width: 0.25rem;
+  --border-radius: 1rem;
+}
+
+.add-body {
+  margin-top: 1rem;
+  .create-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      background-color: green;
+      box-sizing: content-box;
+      // width: var(--create-button-width);
+      height: var(--create-button-heigth);
+      display: flex;
+      gap: var(--box-border-width);
+      justify-content: center;
+      align-items: center;
+      padding: var(--box-border-width) var(--box-border-width);
+      border-radius: var(--border-radius);
+      // max-width: var(--create-button-width);
+      max-width: 45px;
+      transition: width 1s;
+
+      input {
+        text-align: center;
+        box-sizing: inherit border-box;
+        height: 100%;
+        // margin-bottom: 10px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        width: auto;
+        font-size: 18px;
+        overflow: hidden;
+        display: none;
+        max-width: 80%;
+        // flex: 0%;
+        // flex-shrink: 1;
+        // max-width: 0px;
+        font-weight: 500;
+        border-top-left-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+      }
+      button {
+        box-sizing: border-box;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        border-radius: calc(var(--create-button-heigth) / 2);
+        width: var(--create-button-heigth);
+        height: var(--create-button-heigth);
+        border: none;
+        svg {
+          padding: 0;
+          margin: 0;
+          position: relative;
+          top: 1px;
+          left: 0px;
+          height: 20px;
+          width: 20px;
+          fill: var(--add-button-color);
+        }
+      }
+    }
+  }
+
+  .add-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    // align-items: center;
+    .known-player {
+    }
+    .search-player {
+    }
+  }
+  .new-player-two {
+    box-sizing: border-box;
+    background-color: var(--iris-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 10rem;
+    height: 38px;
+    padding: 0.3rem;
+    transition: all 1s ease;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+
+    &::before {
+      transition: all 1s ease;
+      max-width: 3rem;
+    }
+
+    &::after {
+      padding-left: 0.3em;
+    }
+
+    div {
+      display: flex;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      input {
+        text-align: center;
+        box-sizing: inherit border-box;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        border: none;
+        width: auto;
+        font-size: 18px;
+        overflow: hidden;
+        font-weight: 500;
+        border-top-left-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+      }
+      button {
+        height: 100%;
+        border: none;
+        border-bottom-right-radius: calc(var(--border-radius) / 2);
+        border-top-right-radius: calc(var(--border-radius) / 2);
+        width: calc(var(--border-radius) * 2);
+        cursor: pointer;
+        background-color: var(--green-color);
+        background-color: var(--red-color);
+        &::after {
+          color: white;
+          font-size: 20px;
+          font-weight: 600;
+          content: "+";
+        }
+      }
+    }
+  }
+
+  .new-player-two[aria-expanded="true"] {
+    max-width: 15rem;
+    &::after {
+      content: "<";
+    }
+    &::before {
+      max-width: 0px;
+      opacity: 0;
+      content: "New";
+    }
+  }
+
+  .new-player-two[aria-expanded="false"] {
+    max-width: 3.7rem;
+    &::before {
+      content: "New";
+    }
+    &::after {
+      content: ">";
+    }
+  }
+}
+
+.unfold {
+  .add-player-input-area {
+    max-width: var(--create-button-width);
+    input {
+      max-width: 85%;
+      // display: inline-block;
+    }
+  }
+}
+
+.test {
+  max-width: 10px;
+}
+
+@media (min-width: 800px) {
+  .add-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.user-search-field {
+  height: 1.8rem;
+  text-align: center;
+  border-radius: 0.3rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

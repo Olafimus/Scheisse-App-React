@@ -1,0 +1,17 @@
+.match-stat-body {
+  .match-stat-main {
+    display: grid;
+    gap: 2rem;
+    .match-stat-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .match-stat-main {
+    grid-template-columns: auto auto;
+  }
+}

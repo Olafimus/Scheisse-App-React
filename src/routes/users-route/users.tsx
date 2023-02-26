@@ -19,7 +19,6 @@ const UsersRoute = () => {
       test = await getUsers();
       const arr = [...test];
       setUsers(arr);
-      console.log(arr);
     };
     loadUsers();
   }, []);
@@ -32,7 +31,6 @@ const UsersRoute = () => {
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
-    console.log(e.currentTarget.value);
   };
 
   return (
