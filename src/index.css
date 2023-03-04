@@ -5,9 +5,20 @@
   --red-color: #ff3131;
   --white-color: #faebd7;
   --iris-color: #505ac9;
+  --modal-bg-color: #191919;
+  --lightblue-color: #01a6f0;
+  --lightblue-hover: #3651ec;
+  --blue-color: #2427e0;
 }
 
-/* body {
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* body { 
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -19,6 +30,7 @@ body {
   font-family: roboto, helvetica, Arial;
   /* padding-top: 90px; */
   background: #141414;
+  color: white;
   padding-bottom: 70px;
   width: 100%;
   margin: 0;

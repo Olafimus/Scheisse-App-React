@@ -127,7 +127,8 @@
     color: white;
 
     &:hover {
-      color: #900603;
+      // color: #900603;
+      // background-color: rgb(0, 187, 0);
       cursor: pointer;
     }
   }
@@ -138,5 +139,23 @@
     width: 3rem;
     border-radius: 1rem;
     cursor: pointer;
+  }
+
+  .ceremony-button {
+    font-size: 18px;
+    font-weight: 600;
+    width: 13rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    background-color: #18e818;
+    color: rgba(14, 58, 1, 0.85);
+    cursor: pointer;
+
+    &:hover {
+      font-size: 19px;
+      scale: 1.02;
+      background-color: rgb(20, 255, 60);
+      color: rgba(14, 58, 1, 1);
+    }
   }
 }
