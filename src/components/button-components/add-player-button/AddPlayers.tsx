@@ -144,7 +144,7 @@ const AddPlayers = () => {
 
   return (
     <div className="add-body">
-      <div className="add-player-section">
+      {/* <div className="add-player-section">
         <div className="add-button-container">
           <span className="search-player-buttons">
             <span className="button-wrapper">
@@ -186,7 +186,7 @@ const AddPlayers = () => {
             ))}
           </div>
         </section>
-      </div>
+      </div> */}
       {/* old stuff from here */}
       <div className="create-container">
         <div
