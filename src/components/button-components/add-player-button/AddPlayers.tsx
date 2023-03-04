@@ -144,6 +144,50 @@ const AddPlayers = () => {
 
   return (
     <div className="add-body">
+      <div className="add-player-section">
+        <div className="add-button-container">
+          <span className="search-player-buttons">
+            <span className="button-wrapper">
+              <button className="add-known-player add-button">Add</button>
+            </span>
+            <button className="add-online-player add-button">Search</button>
+          </span>
+          <span className="new-player-button">
+            <div
+              className="new-player-two"
+              aria-expanded={"false"}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (e.currentTarget.getAttribute("aria-expanded") === "false")
+                  e.currentTarget.setAttribute("aria-expanded", "true");
+                else e.currentTarget.setAttribute("aria-expanded", "false");
+              }}
+            >
+              <div onClick={(e) => e.stopPropagation()}>
+                <input
+                  placeholder="Enter Name"
+                  ref={nameField}
+                  onChange={handleInput}
+                  // onSubmit={addNewPlayer}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") addNewPlayer();
+                  }}
+                ></input>
+                <button className="add-button" onClick={addNewPlayer}></button>
+              </div>
+            </div>
+            {fail.status && <p>{fail.message}</p>}
+          </span>
+        </div>
+        <section className="chose-player-section">
+          <div className="player-add-list">
+            {knownPlayers.map((pl) => (
+              <span>{pl.name}</span>
+            ))}
+          </div>
+        </section>
+      </div>
+      {/* old stuff from here */}
       <div className="create-container">
         <div
           className="new-player-two"
