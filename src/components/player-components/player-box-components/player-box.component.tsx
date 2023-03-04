@@ -15,10 +15,10 @@ const PlayerBox: React.FC<props> = ({ player }) => {
   const dispatch = useAppDispatch();
   const players = useAppSelector((state) => state.player.players);
   const roundNUmber = useAppSelector((state) => state.gamePara.roundNumber);
+  const rerender = useAppSelector((state) => state.player.reset);
   const lastRound = useAppSelector((state) => state.gamePara.lastRound);
 
   const onChangeHandler = () => {
-    console.log(Number(sticheInput.current?.value));
     const count = Number(sticheInput.current?.value);
     if (count >= 0) {
       const payload = {
@@ -38,7 +38,7 @@ const PlayerBox: React.FC<props> = ({ player }) => {
 
   React.useEffect(() => {
     reset();
-  }, [roundNUmber]);
+  }, [roundNUmber, rerender]);
 
   return (
     <div className="player-box">

@@ -22,13 +22,11 @@ const CheckButtons: React.FC<props> = ({ player }) => {
   }, [checked]);
 
   const rightBtnClick = () => {
-    console.log(rightButton.current);
     wrongButton.current?.classList.remove("wrong");
     rightButton.current?.classList.add("right");
     dispatch(setRight(player));
   };
   const wrongBtnClick = () => {
-    console.log(rightButton.current);
     wrongButton.current?.classList.add("wrong");
     rightButton.current?.classList.remove("right");
     dispatch(setWrong(player));

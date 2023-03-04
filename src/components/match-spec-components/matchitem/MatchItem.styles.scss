@@ -1,0 +1,40 @@
+.match-item {
+  display: grid;
+  grid-template-columns: 15% 55% 15% 15%;
+  margin: 0.2rem;
+  width: 100%;
+  cursor: pointer;
+
+  // min-height: 30px;
+  // max-height: 50px;
+  .match-item-players {
+    display: grid;
+    grid-template-columns: 10% 5% 85%;
+
+    .match-item-player-names {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.match-item-header {
+  padding-bottom: 0.2rem;
+}
+
+.match-item-divider {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+  height: 80%;
+  border-style: solid;
+  border-width: 1px;
+  border-bottom-width: 0;
+  border-top-width: 0;
+  border-right-width: 0;
+
+  border-color: white;
+}

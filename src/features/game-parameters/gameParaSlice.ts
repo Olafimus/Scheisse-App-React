@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { Iplayer } from "../player/playerInterface";
 
 interface gameState {
@@ -13,6 +13,8 @@ interface gameState {
   lastRound: boolean;
   reset: boolean;
   finished: boolean;
+  matchId: string;
+  startedAt: number;
 }
 
 const initialState: gameState = {
@@ -27,6 +29,8 @@ const initialState: gameState = {
   lastRound: false,
   reset: false,
   finished: false,
+  matchId: "",
+  startedAt: 0,
 };
 
 const calcMaxRound = (amountCards: number, playerNumber: number) => {
@@ -38,8 +42,13 @@ export const gameParaSlice = createSlice({
   name: "game State",
   initialState,
   reducers: {
-    startGame: (state) => {
+    startGame: (state, { payload }) => {
       state.started = true;
+      state.startedAt = payload;
+      state.matchId = nanoid().slice(-5);
+    },
+    createMatchId: (state, { payload }) => {
+      state.matchId = payload;
     },
     setAmountCards: (state, { payload = 32 }) => {
       state.amountCards = payload;
@@ -47,7 +56,7 @@ export const gameParaSlice = createSlice({
       state.endRound = er;
     },
     setPlayerNumber: (state, { payload }) => {
-      state.playerNumber = payload.length;
+      state.playerNumber = payload;
       const er = calcMaxRound(state.amountCards, state.playerNumber);
       state.endRound = er;
     },
@@ -76,6 +85,7 @@ export const gameParaSlice = createSlice({
       if (state.roundNumber > 1) state.roundNumber--;
       state.lastRound = true;
     },
+
     restartAppParas: (state) => {
       return initialState;
     },
@@ -84,6 +94,7 @@ export const gameParaSlice = createSlice({
 
 export const {
   startGame,
+  createMatchId,
   setAmountCards,
   setPlayerNumber,
   increaseRoundNumber,

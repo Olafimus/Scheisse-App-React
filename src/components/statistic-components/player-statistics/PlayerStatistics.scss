@@ -1,0 +1,54 @@
+.player-stat-header {
+  text-align: center;
+  padding: 2rem;
+  align-items: center;
+}
+.player-stat-main {
+  display: grid;
+  margin: auto;
+  width: 100%;
+  grid-template-columns: 50% 50%;
+  gap: 2rem;
+  .player-stat-section {
+    display: flex;
+    flex-direction: column;
+    .player-search-title {
+      text-align: center;
+      padding: 1rem;
+    }
+    .player-stat-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: fit-content;
+      max-height: 80vh;
+      overflow: scroll;
+      overflow: hidden;
+      .stat-player-search {
+        width: min(15rem, 80%);
+        align-self: center;
+        text-align: center;
+        padding: 0.2rem;
+        border-radius: 0.5rem;
+      }
+
+      .player-stat-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.2rem;
+
+        .player-stat-list-items {
+          display: grid;
+          grid-template-columns: 20% 60% 20%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .player-stat-main {
+    grid-template-columns: auto;
+  }
+}
