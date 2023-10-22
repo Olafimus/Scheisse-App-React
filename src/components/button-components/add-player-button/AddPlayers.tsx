@@ -1,23 +1,13 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { Console } from "console";
-import { collection, collectionGroup } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { getUsers, createUser, db } from "../../../features/firebase/firebase";
-import {
-  addKnownPlayer,
-  forgetKnownPlayer,
-} from "../../../features/game-history/gameHistorySlice";
+import { createUser, db } from "../../../features/firebase/firebase";
+import { addKnownPlayer } from "../../../features/game-history/gameHistorySlice";
 import { addPlayer } from "../../../features/player/playerSlice";
 import { firstUpper } from "../../../features/scripts/scripts";
-import DropdownButton from "../../genereal-components/Dropddown-menu/DropdownButton";
-import DropdownMenu from "../../genereal-components/Dropddown-menu/DropdownMenu";
-import DropdownOption from "../../genereal-components/Dropddown-menu/DropdownOption";
-import DropdownOptions from "../../genereal-components/Dropddown-menu/DropdownOptions";
 import "./AddPlayers.styles.scss";
-import plusIcon from "../../../assets/pictures/plus-icon.svg";
 
 interface Placements {
   matchId: string;
@@ -44,12 +34,13 @@ const AddPlayers = () => {
   const nameField = React.useRef<HTMLInputElement>(null);
   const { players } = useAppSelector((state) => state.player);
   const { knownPlayers } = useAppSelector((state) => state.gameHistory);
-  // const [knownPlayers, setknownPlayers] = useState([]);
+  const optionsMenu = React.useRef<HTMLInputElement>(null);
+  const [addType, setAddType] = useState<null | "add" | "search">(null);
   const dispatch = useAppDispatch();
   const [users, setUsers] = useState<Array<User>>([]);
   const [filteredUsers, setFilteredUsers] = useState<Array<User>>([]);
   const [fail, setFail] = useState({ status: false, message: "" });
-  const [value, loading, error] = useCollection(collection(db, "users"), {
+  const [value] = useCollection(collection(db, "users"), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
 
@@ -76,18 +67,18 @@ const AddPlayers = () => {
     setFilteredUsers(newUsers);
   }, [users, players]);
 
-  const playerBackUp = [
-    { name: "Barbara", id: "a8arsf" },
-    { name: "Horst", id: "aadsfsf" },
-    { name: "Pascal", id: "aasdfwaasf" },
-    { name: "Oliver", id: "a8aasfssf" },
-    { name: "Shabnam", id: "a8afadsfsf" },
-    { name: "Sina", id: "a8afadsfrtsf" },
-    { name: "Oma", id: "a8afadsfjfsf" },
-    { name: "Dagmar", id: "a8afnhadsfsf" },
-    { name: "Eugen", id: "a8afaaddsfsf" },
-    { name: "Veit", id: "afds8afadsfsf" },
-  ];
+  // const playerBackUp = [
+  //   { name: "Barbara", id: "a8arsf" },
+  //   { name: "Horst", id: "aadsfsf" },
+  //   { name: "Pascal", id: "aasdfwaasf" },
+  //   { name: "Oliver", id: "a8aasfssf" },
+  //   { name: "Shabnam", id: "a8afadsfsf" },
+  //   { name: "Sina", id: "a8afadsfrtsf" },
+  //   { name: "Oma", id: "a8afadsfjfsf" },
+  //   { name: "Dagmar", id: "a8afnhadsfsf" },
+  //   { name: "Eugen", id: "a8afaaddsfsf" },
+  //   { name: "Veit", id: "afds8afadsfsf" },
+  // ];
 
   const filteredPlayers = knownPlayers.filter(
     (player) => !playerNames.includes(player.name)
@@ -129,7 +120,7 @@ const AddPlayers = () => {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget.value.toLowerCase();
-    const btn = document.querySelector(".add-button");
+    const btn = document.querySelector(".add-new-button");
     const lowerNames: string[] = [];
     playerNames.forEach((name) => lowerNames.push(name.toLowerCase()));
 
@@ -142,15 +133,52 @@ const AddPlayers = () => {
     } else setFail({ status: false, message: "" });
   };
 
+  const expandOptions = (count: number) => {
+    if (!optionsMenu.current?.style) return;
+    const val = count > 500 ? 500 : count;
+    console.log(optionsMenu.current.style.maxHeight);
+
+    optionsMenu.current.style.maxHeight = `${30 * val}px`;
+  };
+
+  const addSearched = (user: User) => {
+    dispatch(addPlayer(user));
+    const knownCheck = knownPlayers.filter((pl) => pl.name === user.name);
+    if (!knownCheck.length) dispatch(addKnownPlayer(user));
+    searchField.current?.focus();
+    if (searchField.current?.value) searchField.current.value = "";
+  };
+
+  const addFiltered = (pl: { name: string; id: string }) => {
+    const val = { name: pl.name, id: pl.id };
+    dispatch(addPlayer(val));
+  };
+
+  const switchAddType = (btn: "add" | "search" | null) => {
+    if (addType === btn) setAddType(null);
+    else setAddType(btn);
+    expandOptions(filteredUsers.length + 1);
+  };
+
   return (
-    <div className="add-body">
+    <aside className="add-body">
       <div className="add-player-section">
         <div className="add-button-container">
           <span className="search-player-buttons">
             <span className="button-wrapper">
-              <button className="add-known-player add-button">Add</button>
+              <button
+                className="add-known-player add-button"
+                onClick={() => switchAddType("add")}
+              >
+                Add
+              </button>
             </span>
-            <button className="add-online-player add-button">Search</button>
+            <button
+              className="add-online-player add-button"
+              onClick={() => switchAddType("search")}
+            >
+              Search
+            </button>
           </span>
           <span className="new-player-button">
             <div
@@ -173,113 +201,60 @@ const AddPlayers = () => {
                     if (e.key === "Enter") addNewPlayer();
                   }}
                 ></input>
-                <button className="add-button" onClick={addNewPlayer}></button>
+                <button
+                  className="add-new-button"
+                  onClick={addNewPlayer}
+                ></button>
               </div>
             </div>
             {fail.status && <p>{fail.message}</p>}
           </span>
         </div>
-        <section className="chose-player-section">
-          <div className="player-add-list">
-            {knownPlayers.map((pl) => (
-              <span>{pl.name}</span>
-            ))}
-          </div>
+        <section className="">
+          <span className="dropdown-menu" style={{ margin: "auto" }}>
+            <div
+              className="dropdown-options"
+              id="player-choice-options"
+              ref={optionsMenu}
+            >
+              {addType === "search" && (
+                <input
+                  ref={searchField}
+                  onChange={searchHandler}
+                  placeholder="Search Players"
+                  className="user-search-field"
+                ></input>
+              )}
+              <div
+                className="option-wrapper"
+                style={{ overflow: "auto", maxHeight: 350 }}
+              >
+                {addType === "add" &&
+                  filteredPlayers.map((pl) => (
+                    <option
+                      key={pl.id}
+                      onClick={() => addFiltered(pl)}
+                      style={{ minWidth: 200 }}
+                    >
+                      {pl.name}
+                    </option>
+                  ))}
+                {addType === "search" &&
+                  filteredUsers.map((pl) => (
+                    <option
+                      key={pl.id}
+                      onClick={() => addSearched(pl)}
+                      style={{ minWidth: 200 }}
+                    >
+                      {pl.name}
+                    </option>
+                  ))}{" "}
+              </div>
+            </div>
+          </span>
         </section>
       </div>
-      {/* old stuff from here */}
-      <div className="create-container">
-        <div
-          className="new-player-two"
-          aria-expanded={"false"}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (e.currentTarget.getAttribute("aria-expanded") === "false")
-              e.currentTarget.setAttribute("aria-expanded", "true");
-            else e.currentTarget.setAttribute("aria-expanded", "false");
-          }}
-        >
-          <div onClick={(e) => e.stopPropagation()}>
-            <input
-              placeholder="Enter Name"
-              ref={nameField}
-              onChange={handleInput}
-              // onSubmit={addNewPlayer}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") addNewPlayer();
-              }}
-            ></input>
-            <button className="add-button" onClick={addNewPlayer}></button>
-          </div>
-        </div>
-        {fail.status && <p>{fail.message}</p>}
-      </div>
-      <div className="add-container ">
-        <div className="known-player">
-          <DropdownMenu>
-            <DropdownButton position="center">Add</DropdownButton>
-            <DropdownOptions count={filteredPlayers.length}>
-              {filteredPlayers.map((pl) => {
-                const handleClick = () => {
-                  const val = { name: pl.name, id: pl.id };
-                  dispatch(addPlayer(val));
-                  // const newPlayers = filteredPlayers.filter(
-                  //   (player) => player.id !== pl.id
-                  // );
-                  // setFilteredPlayers(newPlayers);
-                };
-                return (
-                  <DropdownOption
-                    func={handleClick}
-                    stayOpen={true}
-                    key={pl.id}
-                  >
-                    {pl.name}
-                  </DropdownOption>
-                );
-              })}
-            </DropdownOptions>
-          </DropdownMenu>
-        </div>
-        <div className="search-player">
-          <DropdownMenu>
-            <DropdownButton position="center">Search Players</DropdownButton>
-            <DropdownOptions count={filteredUsers.length + 1}>
-              <input
-                ref={searchField}
-                onChange={searchHandler}
-                placeholder="Search Players"
-                className="user-search-field"
-              ></input>
-              {filteredUsers.map((user) => {
-                const clickHanlder = () => {
-                  dispatch(addPlayer(user));
-                  const knownCheck = knownPlayers.filter(
-                    (pl) => pl.name === user.name
-                  );
-                  // dispatch(forgetKnownPlayer());
-                  if (!knownCheck.length) dispatch(addKnownPlayer(user));
-                  searchField.current?.focus();
-                  if (searchField.current?.value)
-                    searchField.current.value = "";
-                };
-
-                return (
-                  <DropdownOption
-                    func={clickHanlder}
-                    stayOpen={true}
-                    key={user.id}
-                  >
-                    {user.name}
-                  </DropdownOption>
-                );
-              })}
-            </DropdownOptions>
-            {/* <DropdownButton>test</DropdownButton> */}
-          </DropdownMenu>
-        </div>
-      </div>
-    </div>
+    </aside>
   );
 };
 

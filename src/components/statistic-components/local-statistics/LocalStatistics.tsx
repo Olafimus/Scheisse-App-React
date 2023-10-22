@@ -4,7 +4,7 @@ import BackButton from "../../button-components/back-button/BackButton";
 import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 
 const LocalStatistics = () => {
-  const { knownPlayers, playedMatches, matchCount } = useAppSelector(
+  const { knownPlayers, playedMatches } = useAppSelector(
     (state) => state.gameHistory
   );
   return (

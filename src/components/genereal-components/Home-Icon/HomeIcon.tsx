@@ -6,7 +6,7 @@ import "./HomeIcon.styles.scss";
 const HomeIcon = () => {
   return (
     <Link to="/">
-      <img className="back-home-button" src={logo} />
+      <img alt="Logo" className="back-home-button" src={logo} />
     </Link>
   );
 };

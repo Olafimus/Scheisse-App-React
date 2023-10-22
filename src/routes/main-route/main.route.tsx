@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AddPlayers from "../../components/button-components/add-player-button/AddPlayers";
 import MidgameButtons from "../../components/button-components/midgame-buttons/midgame-buttons.component";
@@ -9,15 +9,11 @@ import StartList from "../../components/player-components/player-start-list/Star
 import RoundStats from "../../components/round-stat-component/round-stat.component";
 import Settings from "../../components/settings/settings.components";
 import {
-  addMatch,
   addMatchToUser,
   getMatches,
   updateMatch,
 } from "../../features/firebase/firebase";
-import {
-  addMatchToHist,
-  resetHistory,
-} from "../../features/game-history/gameHistorySlice";
+import { addMatchToHist } from "../../features/game-history/gameHistorySlice";
 import {
   setCalledStiche,
   setPlayerNumber,
@@ -30,7 +26,6 @@ import "./main.route.styles.scss";
 
 const MainRoute = () => {
   const dispatch = useAppDispatch();
-  const [matches, setMatches] = useState<Array<Match>>([]);
   const { started, startedAt, roundNumber, finished, matchId } = useAppSelector(
     (state) => state.gamePara
   );

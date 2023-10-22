@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { getMatches } from "../../../features/firebase/firebase";
 import { Match } from "../../../features/match-details/match-details";
 import BackButton from "../../button-components/back-button/BackButton";

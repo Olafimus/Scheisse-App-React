@@ -4,7 +4,6 @@ import {
   Match,
   MatchPlayer,
 } from "../../../../features/match-details/match-details";
-import Scoreboard from "../../../scoreboard/scoreboard.component";
 
 interface Iprops {
   match: Match;
@@ -15,7 +14,7 @@ const WatchPlayerBox: React.FC<Iprops> = ({ match }) => {
   // const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    if (match.matchPlayers != undefined) {
+    if (match.matchPlayers !== undefined) {
       // setLoad(!load);
       match.matchPlayers.forEach((pl) => {
         pl.placement = pl.placements.at(-1);

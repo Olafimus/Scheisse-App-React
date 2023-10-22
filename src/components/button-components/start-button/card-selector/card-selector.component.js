@@ -1,20 +1,10 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch } from "../../../../app/hooks";
 import { setAmountCards } from "../../../../features/game-parameters/gameParaSlice";
 import "./card-selector.styles.scss";
 
-// type HTMLElementEvent<T extends HTMLElement> = Event & {
-//   target: T;
-// };
-
-// const handleClick = (event: HTMLElementEvent<HTMLButtonElement>) => {
-//   const { target } = event;
-//   console.log(target.value);
-// };
-
 const CardSelector = () => {
   const dispatch = useAppDispatch();
-  const cards = useAppSelector((state) => state.gamePara.amountCards);
   useEffect(() => {
     const cardsBtn = document.querySelectorAll(".card-button");
     const cardButtonBox = document.querySelector(".card-selector");

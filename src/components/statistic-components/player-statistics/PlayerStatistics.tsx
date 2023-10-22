@@ -2,10 +2,7 @@ import { collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../../../features/firebase/firebase";
-import {
-  StatUser,
-  User,
-} from "../../button-components/add-player-button/AddPlayers";
+import { StatUser } from "../../button-components/add-player-button/AddPlayers";
 import BackButton from "../../button-components/back-button/BackButton";
 import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 import "./PlayerStatistics.scss";
@@ -13,7 +10,7 @@ import "./PlayerStatistics.scss";
 const PlayerStatistics = () => {
   const [users, setUsers] = useState<StatUser[]>([]);
   const [bestUsers, setBestUsers] = useState<StatUser[]>([]);
-  const [value, loading, error] = useCollection(collection(db, "users"), {
+  const [value] = useCollection(collection(db, "users"), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
 

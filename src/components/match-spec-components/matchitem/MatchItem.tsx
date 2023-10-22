@@ -12,7 +12,7 @@ const MatchItem = ({ match, clickHandler }: Iprops) => {
   const names: Array<string> = [];
   match.matchPlayers?.forEach((pl) => names.push(pl.name));
   let date;
-  if (match.startedAt != undefined) {
+  if (match.startedAt !== undefined) {
     date = new Date(match.startedAt || 0);
   }
 
