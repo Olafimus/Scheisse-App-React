@@ -81,8 +81,14 @@
 }
 
 body {
-  height: 100%;
+  height: 100dvh;
+  width: 100dvw;
   font-family: Roboto, helvetica;
+  position: relative;
+}
+.ceremony-body {
+  // width: 100dvw;
+  // height: 100dvh;
 }
 .podest-table {
   width: 100%;
@@ -95,6 +101,7 @@ body {
 .treppchen-container {
   display: flex;
   width: 80%;
+  min-height: 350px;
   animation: first-rescale-treppchen 2s linear 8s 1 normal forwards;
 }
 
@@ -297,4 +304,13 @@ body {
   background-color: antiquewhite;
   color: #464eb8;
   transform: scale(1.1);
+}
+
+@media (max-width: 550px) {
+  body {
+    height: 100%;
+  }
+  .podest-table {
+    flex-direction: column;
+  }
 }

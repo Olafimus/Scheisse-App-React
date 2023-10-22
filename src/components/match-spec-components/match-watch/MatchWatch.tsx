@@ -10,17 +10,11 @@ import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 import "./MatchWatch.styles.scss";
 import WatchPlayerBox from "./watch-player-box/WatchPlayerBox";
 
-interface IMatchParams {
-  matchRef: string;
-}
-
 const MatchWatch = () => {
   const { matchRef } = useParams<{ matchRef: string }>();
   const [match, setMatch] = React.useState<Match>({});
-  // useEffect(() => {}, []);
-  // const [value, loading, error] = useMatchListener(params);
 
-  const [value, loading, error] = useDocument(
+  const [value, loading] = useDocument(
     doc(db, "matches", matchRef || "failed"),
     {
       snapshotListenOptions: { includeMetadataChanges: true },

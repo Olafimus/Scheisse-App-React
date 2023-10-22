@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import "./MatchSpecRoute.styles.scss";
-import { getMatches } from "../../features/firebase/firebase";
+import { deleteMatch, getMatches } from "../../features/firebase/firebase";
 import { Match } from "../../features/match-details/match-details";
 import MatchList from "../../components/match-spec-components/MatchList/MatchList";
-import { Link } from "react-router-dom";
 import HomeIcon from "../../components/genereal-components/Home-Icon/HomeIcon";
 
 export interface IMatchSpecProps {
@@ -19,27 +18,16 @@ export interface IMatchSpecProps {
 const MatchSpecRoute = () => {
   const [showActive, setShowActive] = useState(false);
   const [showAll, setShowAll] = useState(false);
-  // const [activeMatches, setActiveMatches] = useState<Array<Match>>([]);
   const [allMatches, setAllMatches] = useState<Array<Match>>([]);
-  const props = {
-    showActive,
-    showAll,
-    setShowActive,
-    setShowAll,
-    allMatches,
-  };
 
   useEffect(() => {
-    // const match = createMatchDetail(
-    //   players,
-    //   roundNumber,
-    //   finished,
-    //   giver,
-    //   matchId
-    // );
-
     const loadMatches = async () => {
-      const matches = await getMatches();
+      const matches = (await getMatches()) as Match[];
+      matches.forEach((match) => {
+        if (!match.startedAt) return;
+        const canceled = Date.now() - match.startedAt > 1000 * 60 * 60 * 24;
+        if (!match.finished && canceled) deleteMatch(match.matchRef);
+      });
       setAllMatches(matches);
     };
     loadMatches();
@@ -71,9 +59,6 @@ const MatchSpecRoute = () => {
       <div className="match-selection">
         {showActive && <MatchList link="match" matches={activeMatches} />}
         {showAll && <MatchList link="match" matches={allMatches} />}
-        {/* <AchtiveMatches {...props} /> */}
-
-        {/* <AllMatches {...props} /> */}
       </div>
     </div>
   );

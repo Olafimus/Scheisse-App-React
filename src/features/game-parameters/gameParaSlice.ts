@@ -1,5 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { Iplayer } from "../player/playerInterface";
+import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface gameState {
   started: boolean;
@@ -9,6 +8,7 @@ interface gameState {
   endRound: number;
   calledStiche: number;
   maxStiche: number;
+  setMaxCards: number | null;
   sticheComp: string;
   lastRound: boolean;
   reset: boolean;
@@ -25,6 +25,7 @@ const initialState: gameState = {
   endRound: 0,
   calledStiche: 0,
   maxStiche: 1,
+  setMaxCards: null,
   sticheComp: "bad",
   lastRound: false,
   reset: false,
@@ -33,8 +34,13 @@ const initialState: gameState = {
   startedAt: 0,
 };
 
-const calcMaxRound = (amountCards: number, playerNumber: number) => {
-  let calcEndRoundStiche = amountCards / playerNumber;
+const calcMaxRound = (
+  amountCards: number,
+  playerNumber: number,
+  setMax: null | number
+) => {
+  // if (setMax) return setMax;
+  let calcEndRoundStiche = setMax ? setMax : amountCards / playerNumber;
   return Math.trunc(calcEndRoundStiche) * 2 - 1;
 };
 
@@ -52,12 +58,16 @@ export const gameParaSlice = createSlice({
     },
     setAmountCards: (state, { payload = 32 }) => {
       state.amountCards = payload;
-      const er = calcMaxRound(payload, state.playerNumber);
+      const er = calcMaxRound(payload, state.playerNumber, state.setMaxCards);
       state.endRound = er;
     },
     setPlayerNumber: (state, { payload }) => {
       state.playerNumber = payload;
-      const er = calcMaxRound(state.amountCards, state.playerNumber);
+      const er = calcMaxRound(
+        state.amountCards,
+        state.playerNumber,
+        state.setMaxCards
+      );
       state.endRound = er;
     },
     increaseRoundNumber: (state) => {
@@ -89,6 +99,11 @@ export const gameParaSlice = createSlice({
     restartAppParas: (state) => {
       return initialState;
     },
+    setMaxACards: (s, a: PayloadAction<null | number>) => {
+      s.setMaxCards = a.payload;
+      const er = calcMaxRound(s.amountCards, s.playerNumber, a.payload);
+      s.endRound = er;
+    },
   },
 });
 
@@ -100,6 +115,7 @@ export const {
   increaseRoundNumber,
   calcMaxStiche,
   setCalledStiche,
+  setMaxACards,
   endGame,
   lastRoundStats,
   restartAppParas,

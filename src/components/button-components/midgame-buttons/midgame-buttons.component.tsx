@@ -15,7 +15,6 @@ import {
   sumScore,
   calcStatistics,
 } from "../../../features/player/playerSlice";
-import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 import "./midgame-buttons.styles.scss";
 
 const MidgameButtons = () => {
@@ -34,7 +33,7 @@ const MidgameButtons = () => {
       dispatch(nextGiver());
       dispatch(sortPlayers());
 
-      if (roundNumber != endRound) {
+      if (roundNumber !== endRound) {
         dispatch(increaseRoundNumber());
         dispatch(calcMaxStiche());
       }
@@ -60,7 +59,6 @@ const MidgameButtons = () => {
         dispatch(lastRoundPlayers(true));
         dispatch(lastRoundStats());
         dispatch(calcMaxStiche());
-        // dispatch(addStiche(players));
       }
     }
   };
@@ -68,12 +66,7 @@ const MidgameButtons = () => {
   const reset = () => {
     const allRightBtns = document.querySelectorAll(".right-button");
     const allWrongBtns = document.querySelectorAll(".wrong-button");
-    const allInputs = document.querySelectorAll(".player-stiche");
 
-    // allInputs.forEach((inp) => {
-    //   // inp.value = "";
-    //   console.log(inp);
-    // });
     allRightBtns.forEach((btn) => {
       btn.classList.remove("right");
     });

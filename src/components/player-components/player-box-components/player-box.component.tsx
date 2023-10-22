@@ -13,7 +13,6 @@ const PlayerBox: React.FC<props> = ({ player }) => {
   const sticheInput = React.useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
-  const players = useAppSelector((state) => state.player.players);
   const roundNUmber = useAppSelector((state) => state.gamePara.roundNumber);
   const rerender = useAppSelector((state) => state.player.reset);
   const lastRound = useAppSelector((state) => state.gamePara.lastRound);
@@ -48,7 +47,7 @@ const PlayerBox: React.FC<props> = ({ player }) => {
             {player.name} {player.placement}.
           </p>
         ) : (
-          <p className="playerName" id="player-name${playerId}">
+          <p className="playerName" id={`player-name${player.playerId}`}>
             {player.name}
           </p>
         )}
@@ -57,7 +56,7 @@ const PlayerBox: React.FC<props> = ({ player }) => {
       <div className="player-information">
         <div className="player-score">
           <p className="score">Punkte</p>
-          <p className="score-number" id="score-player${playerId}">
+          <p className="score-number" id={`core-player${player.playerId}`}>
             {player.currentScore}
           </p>
         </div>

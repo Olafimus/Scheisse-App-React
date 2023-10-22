@@ -8,7 +8,6 @@ import storage from "redux-persist/lib/storage";
 import counterReducer from "../features/counter/counterSlice";
 import playerReducer from "../features/player/playerSlice";
 import gameParaReducer from "../features/game-parameters/gameParaSlice";
-import logger from "redux-logger";
 import { persistReducer } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import thunk from "redux-thunk";
@@ -32,7 +31,7 @@ const persistedReducer = persistReducer(persistConfig, appReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  // devTools: process.env.NODE_ENV !== "production",
+  devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 

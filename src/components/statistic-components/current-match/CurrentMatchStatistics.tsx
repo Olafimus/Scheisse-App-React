@@ -1,13 +1,11 @@
 import React from "react";
 import "./CurrentMatchStatistics.scss";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import BackButton from "../../button-components/back-button/BackButton";
-import { addMatchToUser } from "../../../features/firebase/firebase";
 import MatchStatPlayer from "./CurrentMatchStatPlayer";
 import MatchStatisticsGeneral from "./CurrentMatchStatisticsGeneral";
 
 const MatchStatistics = () => {
-  const dispatch = useAppDispatch();
   const { players } = useAppSelector((state) => state.player);
 
   return (

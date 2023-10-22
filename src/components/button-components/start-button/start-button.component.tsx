@@ -1,25 +1,20 @@
 import { nanoid } from "@reduxjs/toolkit";
-import * as React from "react";
-import uuid from "react-uuid";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { addMatch } from "../../../features/firebase/firebase";
 import {
   createMatchId,
-  setPlayerNumber,
   startGame,
 } from "../../../features/game-parameters/gameParaSlice";
 import { createMatchDetail } from "../../../features/match-details/match-details";
-import { addPlayer, setGiver } from "../../../features/player/playerSlice";
+import { setGiver } from "../../../features/player/playerSlice";
 import CardSelector from "./card-selector/card-selector.component";
 import "./start-button.styles.scss";
+import MaxCardsSelect from "./max-cards-menu/max-cards.component";
 
 const StartButton = () => {
   const dispatch = useAppDispatch();
-  const { started, roundNumber, finished, matchId } = useAppSelector(
-    (state) => state.gamePara
-  );
+  const { roundNumber, finished } = useAppSelector((state) => state.gamePara);
   const { players, giver } = useAppSelector((state) => state.player);
-  const nameInput = React.useRef<HTMLInputElement>(null);
 
   const startGameHandler = async () => {
     const startedAt = Date.now();
@@ -42,36 +37,11 @@ const StartButton = () => {
 
   return (
     <div className="start-buttons">
-      {/* <div className="add-container">
-        <input
-          type="text"
-          placeholder="Dein Name"
-          id="player-name-input"
-          ref={nameInput}
-        />
-        <button
-          id="add-player"
-          onClick={() => {
-            if (nameInput.current?.value) {
-              const id = uuid();
-              const payload = {
-                name: nameInput.current.value,
-                id,
-              };
-              dispatch(addPlayer(payload));
-
-              nameInput.current.value = "";
-            }
-          }}
-        >
-          <span id="add-plus">+</span>
-        </button>
-      </div> */}
-
       <button id="start-game" onClick={startGameHandler}>
         Start Game
       </button>
       <CardSelector />
+      <MaxCardsSelect />
     </div>
   );
 };
