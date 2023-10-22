@@ -1,0 +1,56 @@
+.max-cards-setup-container {
+  input[type="number"] {
+    /*for absolutely positioning spinners*/
+    position: relative;
+    padding: 3px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    width: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+  }
+  border: 2px;
+  border-style: groove;
+  border-radius: 1.5em;
+  border-color: blanchedalmond;
+
+  font-size: large;
+  .max-cards-label {
+    padding: 0.5em 0em;
+    padding-left: 1em;
+    height: 2em;
+    background-color: rgba(128, 128, 128, 0.505);
+    border-top-left-radius: 1.1em;
+    border-bottom-left-radius: 1.1em;
+  }
+
+  .max-cards-input {
+    background-color: rgba(128, 128, 128, 0.505);
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    // padding: 0.3em 0.2em;
+    width: 2.7em;
+    height: 2.2em;
+    border-top-right-radius: 1.1em;
+    border-bottom-right-radius: 1.1em;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+  }
+}

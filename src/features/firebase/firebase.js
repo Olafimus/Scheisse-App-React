@@ -21,10 +21,9 @@ import {
   query,
   where,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
-
-import { Match } from "../match-details/match-details";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA9oSr0qJRPwLz3eqqV8WDsk4XQJjl53Ks",
@@ -134,6 +133,11 @@ export const updateMatch = async (
   });
 };
 
+export const deleteMatch = async (matchRef) => {
+  const matchDocRef = doc(db, "matches", matchRef);
+  await deleteDoc(matchDocRef);
+};
+
 export const getMatches = async () => {
   const data = await getDocs(matchCollectionRef);
   const matches = data.docs.map((doc) => ({
@@ -186,4 +190,9 @@ export const addMatchToUser = async (user, matchId, placement) => {
     matches: arrayUnion(matchId),
     placements: arrayUnion(placeObj),
   });
+};
+
+const resetAllDate = async () => {
+  await updateDoc("users", {});
+  await updateDoc("matches", {});
 };

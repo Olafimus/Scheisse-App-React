@@ -1,11 +1,11 @@
 import React from "react";
 
-interface ModalHeader {
+interface IModalHeader {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   children?: React.ReactNode;
 }
 
-const ModalHeader: React.FC<ModalHeader> = ({ setShow, children }) => {
+const ModalHeader: React.FC<IModalHeader> = ({ setShow, children }) => {
   const handleClose = () => {
     const modBod = document.querySelector(".modal-body");
     modBod?.setAttribute("aria-expanded", "true");

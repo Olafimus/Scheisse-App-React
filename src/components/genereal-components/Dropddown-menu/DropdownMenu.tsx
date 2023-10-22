@@ -1,13 +1,6 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import React, { Dispatch, SyntheticEvent } from "react";
-import { DispatchProp } from "react-redux";
+import React from "react";
 import "./DropdownMenu.styles.scss";
 
-enum Position {
-  center = "center",
-  left = "left",
-  right = "right",
-}
 export interface IDropProps {
   children?: React.ReactNode;
   position?: "center" | "left" | "right";

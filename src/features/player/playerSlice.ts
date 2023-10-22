@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { freshPlayer, Iplayer } from "./playerInterface";
-import { sortByGiver, sortByPlacement } from "./state-variables";
 
 export interface playerState {
   players: Array<Iplayer>;
@@ -94,7 +93,7 @@ export const counterSlice = createSlice({
             player.placement = i;
           } else continue;
         }
-        if (player.placement != undefined && player.placements != undefined)
+        if (player.placement !== undefined && player.placements !== undefined)
           player.placements.push(player.placement);
       });
 
@@ -110,9 +109,16 @@ export const counterSlice = createSlice({
         player.checked = false;
       });
       state.allChecked = false;
-      if (state.giverIndex === 0) state.giverIndex = state.players.length - 1;
-      else state.giverIndex--;
-      state.giver = state.players[state.giverIndex].name;
+
+      const currentGiver = state.players.find((pl) => pl.name === state.giver);
+      if (currentGiver?.position !== undefined)
+        state.giverIndex = currentGiver.position - 1;
+      if (state.giverIndex === -1) state.giverIndex = state.players.length - 1;
+
+      const newGiver = state.players.find(
+        (pl) => pl.position === state.giverIndex
+      );
+      if (newGiver !== undefined) state.giver = newGiver.name;
     },
     restartAppPlayers: () => {
       return initialState;
@@ -135,14 +141,14 @@ export const counterSlice = createSlice({
     },
     nextGiver: (state) => {
       const currentGiver = state.players.find((pl) => pl.name === state.giver);
-      if (currentGiver?.position != undefined)
+      if (currentGiver?.position !== undefined)
         state.giverIndex = currentGiver?.position + 1;
       if (state.giverIndex === state.players.length) state.giverIndex = 0;
 
       const newGiver = state.players.find(
         (pl) => pl.position === state.giverIndex
       );
-      if (newGiver != undefined) state.giver = newGiver.name;
+      if (newGiver !== undefined) state.giver = newGiver.name;
 
       // if (state.giverIndex < state.players.length - 1) state.giverIndex++;
       // else state.giverIndex = 0;

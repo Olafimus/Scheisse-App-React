@@ -3,8 +3,6 @@ import "./MatchList.styles.scss";
 import { Match } from "../../../features/match-details/match-details";
 import MatchItem from "../matchitem/MatchItem";
 import { Link } from "react-router-dom";
-import { GiElderberry } from "react-icons/gi";
-import { match } from "assert";
 
 interface Iprops {
   matches?: Array<Match>;
@@ -40,10 +38,6 @@ const MatchList: React.FC<Iprops> = ({ matches, link, clickHandler }) => {
     setFilteredMatches(newMatches);
   };
 
-  const content = () => {
-    if (link) return;
-  };
-
   return (
     <div className="matchlist-container">
       <input
@@ -59,6 +53,9 @@ const MatchList: React.FC<Iprops> = ({ matches, link, clickHandler }) => {
         <p>Round</p>
         <p>started</p>
       </div>
+      {filteredMatches.length === 0 && (
+        <p style={{ padding: 15 }}>No Active Matches right now</p>
+      )}
       {filteredMatches?.map((match) => (
         <span key={match.id} className="match-item-list">
           {link ? (

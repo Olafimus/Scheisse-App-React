@@ -1,6 +1,4 @@
 import { Iplayer, Istatistics } from "../player/playerInterface";
-import { nanoid } from "@reduxjs/toolkit";
-import { setDoc } from "firebase/firestore";
 
 export interface MatchPlayer {
   name: string;

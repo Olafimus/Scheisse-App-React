@@ -1,6 +1,5 @@
 import React from "react";
 import { useAppSelector } from "../../../app/hooks";
-import Statistics from "../../../routes/statistics-route/Statistics";
 import StatisticListItem from "../general/StatisticListItem";
 import StatisticsList from "../general/StatisticsList";
 
