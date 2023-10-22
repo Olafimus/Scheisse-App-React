@@ -67,19 +67,6 @@ const AddPlayers = () => {
     setFilteredUsers(newUsers);
   }, [users, players]);
 
-  // const playerBackUp = [
-  //   { name: "Barbara", id: "a8arsf" },
-  //   { name: "Horst", id: "aadsfsf" },
-  //   { name: "Pascal", id: "aasdfwaasf" },
-  //   { name: "Oliver", id: "a8aasfssf" },
-  //   { name: "Shabnam", id: "a8afadsfsf" },
-  //   { name: "Sina", id: "a8afadsfrtsf" },
-  //   { name: "Oma", id: "a8afadsfjfsf" },
-  //   { name: "Dagmar", id: "a8afnhadsfsf" },
-  //   { name: "Eugen", id: "a8afaaddsfsf" },
-  //   { name: "Veit", id: "afds8afadsfsf" },
-  // ];
-
   const filteredPlayers = knownPlayers.filter(
     (player) => !playerNames.includes(player.name)
   );
@@ -161,7 +148,7 @@ const AddPlayers = () => {
   };
 
   return (
-    <aside className="add-body">
+<aside className="add-body">
       <div className="add-player-section">
         <div className="add-button-container">
           <span className="search-player-buttons">
