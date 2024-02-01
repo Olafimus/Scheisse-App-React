@@ -2,7 +2,6 @@ import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
-  PayloadAction,
 } from "@reduxjs/toolkit";
 import { store } from "../../../app/store";
 import { getAllPlayers } from "../../../features/firebase/statistics";
@@ -174,7 +173,6 @@ export const StatPlayersSlice = createSlice({
       s.status = "succeeded";
       s.error = null;
       s.lastUpdate = Date.now();
-      a.payload;
       // console.log(a.payload[10].matchstats);
       StatPlayersAdapter.upsertMany(s, a.payload);
     });
