@@ -1,11 +1,36 @@
 .scoreboard-component {
   width: 95%;
+  margin-top: 10px;
+  .correction-score-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(15px, 15px);
+    padding: 5px;
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 5px;
 
+    color: white;
+    cursor: pointer;
+  }
+  .cor-active-btn {
+    background-color: hsl(123, 41%, 45%);
+    &:hover {
+      background-color: hsl(123, 41%, 55%);
+    }
+  }
+  .cor-inactive-btn {
+    background-color: #f57c00;
+    &:hover {
+      background-color: hsl(30, 100%, 58%);
+    }
+  }
   table {
     width: 100%;
     padding: 0;
     border-collapse: collapse;
-    border-color: white;
+    // border-color: green;
     table-layout: fixed;
 
     th {
@@ -49,6 +74,48 @@
     }
     .third {
       background-color: #cd7f32;
+    }
+    .right {
+      background-color: #43a048b0;
+    }
+    .wrong {
+      background-color: #d32f2fa9;
+    }
+  }
+  .btn {
+    padding: 5px;
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 5px;
+
+    color: white;
+    cursor: pointer;
+  }
+  .save-btn {
+    background-color: var(--blue-color);
+  }
+  .cancle-btn {
+    background-color: slategrey;
+  }
+
+  .player-stiche-box {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    .player-stiche {
+      display: inline-block;
+      background-color: rgb(210, 210, 210, 0.75);
+      color: black;
+      width: 50%;
+      height: 1.8rem;
+      margin: auto;
+      text-align: center;
+      border-style: groove;
+      border-color: white;
+      border-width: 0.2rem;
+      border-radius: 1rem;
+      font-size: large;
+      font-weight: bold;
+      padding-left: 0.7rem;
     }
   }
 }

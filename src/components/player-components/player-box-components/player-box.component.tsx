@@ -75,7 +75,7 @@ const PlayerBox: React.FC<props> = ({ player }) => {
           />
         </div>
 
-        <CheckButtons player={player} />
+        <CheckButtons type="standard" player={player} />
       </div>
     </div>
   );

@@ -6,8 +6,25 @@ import { StatUser } from "../../button-components/add-player-button/AddPlayers";
 import BackButton from "../../button-components/back-button/BackButton";
 import HomeIcon from "../../genereal-components/Home-Icon/HomeIcon";
 import "./PlayerStatistics.scss";
+import { store } from "../../../app/store";
+import { loadStatPlayers } from "./PlayerStatSlice";
+import { useSelector } from "react-redux";
+import {
+  AllMatchesType,
+  selectAllMatches,
+  selectMatchById,
+  selectMatchEntities,
+  selectMatchIds,
+  selectMatchTotal,
+} from "../all-matches/AllMatchesSlice";
+import { useAppSelector } from "../../../app/hooks";
 
 const PlayerStatistics = () => {
+  const matches = useSelector(selectAllMatches);
+  const matchEntities = useSelector(selectMatchEntities);
+  const matchIds = useSelector(selectMatchIds);
+  const matchTotal = useSelector(selectMatchTotal);
+  const match = useAppSelector((s) => selectMatchById(s, "pPZgJ"));
   const [users, setUsers] = useState<StatUser[]>([]);
   const [bestUsers, setBestUsers] = useState<StatUser[]>([]);
   const [value] = useCollection(collection(db, "users"), {
@@ -46,6 +63,16 @@ const PlayerStatistics = () => {
     tempUsers.sort((a, b) => b.firstPlaces - a.firstPlaces);
     setBestUsers(tempUsers);
   }, [users]);
+
+  useEffect(() => {
+    if (matches.length < 1) return;
+    console.log(matches);
+    console.log(matchEntities);
+    console.log(matchIds);
+    console.log(matchTotal);
+    console.log(match);
+    store.dispatch(loadStatPlayers());
+  }, [matches.length]);
 
   return (
     <div>

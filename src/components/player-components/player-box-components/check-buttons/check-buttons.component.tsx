@@ -3,40 +3,68 @@ import * as React from "react";
 import { Iplayer } from "../../../../features/player/playerInterface";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { setRight, setWrong } from "../../../../features/player/playerSlice";
+import { RowObject } from "../../../scoreboard/scoreboard.component";
 
-interface props {
+interface CorrectionProps {
+  type: "correction";
+  setCorItem: (val: RowObject) => void;
+  corItem: RowObject;
+  toggle: boolean;
+}
+interface StandardProps {
+  type: "standard";
   player: Iplayer;
+  toggle?: boolean;
 }
 
-const CheckButtons: React.FC<props> = ({ player }) => {
+type props = StandardProps | CorrectionProps;
+
+const CheckButtons: React.FC<props> = (props) => {
+  const { type } = props;
+  const player = type === "standard" ? props.player : undefined;
   const dispatch = useAppDispatch();
   const rightButton = React.useRef<HTMLButtonElement>(null);
   const wrongButton = React.useRef<HTMLButtonElement>(null);
   const checked = useAppSelector((state) => state.player.allChecked);
 
   React.useEffect(() => {
-    if (!checked) {
+    if (!checked && player) {
       wrongButton.current?.classList.remove("wrong");
       rightButton.current?.classList.remove("right");
     }
-  }, [checked]);
+    if (props.type === "correction") {
+      wrongButton.current?.classList.remove("wrong");
+      rightButton.current?.classList.remove("right");
+      props.corItem?.right
+        ? rightButton.current?.classList.add("right")
+        : wrongButton.current?.classList.add("wrong");
+    }
+  }, [checked, props.toggle]);
 
   const rightBtnClick = () => {
     wrongButton.current?.classList.remove("wrong");
     rightButton.current?.classList.add("right");
-    dispatch(setRight(player));
+    if (player) dispatch(setRight(player));
+    if (type === "correction") {
+      props.setCorItem({ ...props.corItem, right: true });
+    }
   };
   const wrongBtnClick = () => {
     wrongButton.current?.classList.add("wrong");
     rightButton.current?.classList.remove("right");
-    dispatch(setWrong(player));
+    if (player) dispatch(setWrong(player));
+    if (type === "correction") {
+      props.setCorItem({ ...props.corItem, right: false });
+    }
   };
 
   return (
     <div className="radio-buttons">
-      <div>
-        <p>Richtig?</p>
-      </div>
+      {type === "standard" && (
+        <div>
+          <p>Richtig?</p>
+        </div>
+      )}
       <div className="checkbos-button-container">
         <button
           onClick={rightBtnClick}

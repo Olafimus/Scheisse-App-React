@@ -13,10 +13,13 @@ import persistStore from "redux-persist/es/persistStore";
 import thunk from "redux-thunk";
 import gameSetReducer from "../features/game-settings/GameSetSlice";
 import gameHistoryReducer from "../features/game-history/gameHistorySlice";
+import allMatchesReducer from "../components/statistic-components/all-matches/AllMatchesSlice";
+import statPlayersReducer from "../components/statistic-components/player-statistics/PlayerStatSlice";
 
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["statPlayers"],
 };
 
 const appReducer = combineReducers({
@@ -25,6 +28,8 @@ const appReducer = combineReducers({
   gamePara: gameParaReducer,
   gameSettings: gameSetReducer,
   gameHistory: gameHistoryReducer,
+  matches: allMatchesReducer,
+  statPlayers: statPlayersReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

@@ -1,0 +1,18 @@
+.player-view-container {
+  display: flex;
+  flex-wrap: wrap;
+  section {
+    flex: 1;
+    min-width: 500px;
+    text-align: center;
+    padding: 10;
+  }
+  .statistics-section {
+    background-color: rgb(50, 50, 60);
+  }
+  .matches-section {
+    .player-matchlist-container {
+      background-color: rgb(50, 50, 60);
+    }
+  }
+}
