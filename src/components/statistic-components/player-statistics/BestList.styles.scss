@@ -1,0 +1,50 @@
+.best-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  gap: 0.3em;
+  font-size: large;
+  font-weight: bold;
+  list-style-type: none;
+
+  .best-list-element {
+    flex: 1;
+    // max-width: 90%;
+    max-width: 1000px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: auto;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 10% 15% 15% 15% 15% 15% 15%;
+    transform: skewX(-25deg);
+
+    p {
+      transform: skewX(25deg);
+    }
+  }
+  .first-element {
+    background-image: linear-gradient(
+      to top left,
+      hsla(255, 85%, 44%, 0.55),
+      hsla(275, 84%, 45%, 0.55)
+    );
+    p {
+      cursor: pointer;
+    }
+  }
+  .player-element {
+    background-image: linear-gradient(to top left, #39b385, #9be15d);
+    &:hover {
+      background-image: linear-gradient(
+        to top left,
+        hsl(157, 52%, 28%),
+        hsl(92, 69%, 40%)
+      );
+    }
+  }
+  .active-element {
+    font-weight: bolder;
+  }
+}

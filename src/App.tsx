@@ -14,6 +14,8 @@ import MatchStatistics from "./components/statistic-components/current-match/Cur
 import PlayerStatistics from "./components/statistic-components/player-statistics/PlayerStatistics";
 import AllMatchStatistics from "./components/statistic-components/all-matches/AllMatchStatistics";
 import LocalStatistics from "./components/statistic-components/local-statistics/LocalStatistics";
+import NewPlayerStatistics from "./components/statistic-components/player-statistics/NewPlayerStatistics";
+import PlayerView from "./components/statistic-components/player-statistics/player-view/PlayerView";
 
 function App() {
   return (
@@ -39,7 +41,11 @@ function App() {
           <Route index element={<AllMatchStatistics />} />
           <Route path="match/:matchRef" element={<AllMatchStatistics />} />
         </Route>
-        <Route path="players" element={<PlayerStatistics />} />
+        <Route path="players">
+          <Route index element={<NewPlayerStatistics />} />
+          <Route path=":id" element={<PlayerView />} />
+        </Route>
+
         <Route path="localstats" element={<LocalStatistics />} />
       </Route>
     </Routes>

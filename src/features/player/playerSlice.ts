@@ -1,5 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { freshPlayer, Iplayer } from "./playerInterface";
+import {
+  CorObj,
+  RowObject,
+} from "../../components/scoreboard/scoreboard.component";
 
 export interface playerState {
   players: Array<Iplayer>;
@@ -231,6 +235,43 @@ export const counterSlice = createSlice({
         if (pl.placement === payload) pl.statistics.lastPlaces++;
       });
     },
+    changePlayerOrder: (
+      s,
+      a: PayloadAction<{ id: string; position: number }[]>
+    ) => {
+      const newPlayers: Iplayer[] = [];
+      a.payload.forEach((el) => {
+        const player = s.players.find((pl) => el.id === pl.playerId);
+        if (!player) return;
+        player.position = el.position;
+        newPlayers.push(player);
+      });
+      s.players = newPlayers;
+    },
+    correctPlayer: (s, a: PayloadAction<CorObj>) => {
+      const { playerId, round, right, stiche } = a.payload;
+      const player = s.players.find((pl) => pl.playerId === playerId);
+      if (!player) return;
+      const callHis: boolean[] = player.score.map((el, i) => {
+        if (i === 0) return false;
+        if (el > player.score[i - 1]) return true;
+        return false;
+      });
+      callHis[round] = right;
+      player.stichHistory[round] = stiche;
+      const newScoreLine = [0];
+      player.stichHistory.forEach((el, i) => {
+        if (i === 0) return;
+        if (callHis[i]) {
+          newScoreLine.push(newScoreLine[i - 1] + el + 10);
+        } else {
+          newScoreLine.push(newScoreLine[i - 1] - 10);
+        }
+      });
+      player.score = newScoreLine;
+      const playerIndex = s.players.findIndex((el) => el.playerId === playerId);
+      s.players[playerIndex] = player;
+    },
   },
 });
 
@@ -253,5 +294,7 @@ export const {
   movePlayerDown,
   deletePlayer,
   resetRound,
+  changePlayerOrder,
+  correctPlayer,
 } = counterSlice.actions;
 export default counterSlice.reducer;
