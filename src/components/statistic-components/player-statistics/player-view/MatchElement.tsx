@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../../app/hooks";
 import { selectMatchById } from "../../all-matches/AllMatchesSlice";
 import { LoadedStatMatch, StatPlayer } from "../PlayerStatSlice";
 import ReactTimeAgo from "react-time-ago";
+import { Link } from "react-router-dom";
 
 type Props =
   | { player: StatPlayer; matchId: string; first: false }
@@ -23,7 +24,7 @@ const MatchElement = ({ player, matchId, first }: Props) => {
   }
 
   return (
-    <div>
+    <div className="match-overview">
       {first ? (
         <>
           <p>Date</p>
@@ -31,7 +32,10 @@ const MatchElement = ({ player, matchId, first }: Props) => {
           <p>Placement</p>
         </>
       ) : (
-        <>
+        <Link
+          to={`/matchspec/match/${match?.matchRef}`}
+          className="match-element"
+        >
           <p>
             {date && (
               <ReactTimeAgo date={date} locale="en-US" timeStyle="twitter" />
@@ -39,7 +43,7 @@ const MatchElement = ({ player, matchId, first }: Props) => {
           </p>
           <p>{playerNames?.join(", ")}</p>
           <p>{placement}</p>
-        </>
+        </Link>
       )}
     </div>
   );

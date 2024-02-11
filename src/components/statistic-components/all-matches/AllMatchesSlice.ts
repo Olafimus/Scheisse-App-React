@@ -44,7 +44,8 @@ const initialState = allMatchesAdapter.getInitialState({
 export const fetchMatches = createAsyncThunk(
   "matches/fetchMatches",
   async (lastUpdate: number) => {
-    const matches = await fetchAllMatches(lastUpdate);
+    const matches = await fetchAllMatches(0);
+    console.log(matches.length);
     return matches;
   }
 );
@@ -74,8 +75,9 @@ export const AllMatchesSlice = createSlice({
       s.error = null;
       s.lastUpdate = Date.now();
 
-      allMatchesAdapter.addMany(s, a.payload);
+      allMatchesAdapter.setAll(s, a.payload);
       s.count = Object.keys(s.entities).length;
+      console.log(s.count);
     });
   },
 });
