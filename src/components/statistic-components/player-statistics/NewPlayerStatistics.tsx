@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import BestList from "./BestList";
+import BestList from "./best-list/BestList";
 import { useAppSelector } from "../../../app/hooks";
 import { loadStatPlayers, selectAllStatPlayers } from "./PlayerStatSlice";
 import { store } from "../../../app/store";

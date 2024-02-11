@@ -13,6 +13,7 @@ import DropdownButton from "../../genereal-components/Dropddown-menu/DropdownBut
 import DropdownMenu from "../../genereal-components/Dropddown-menu/DropdownMenu";
 import DropdownOptions from "../../genereal-components/Dropddown-menu/DropdownOptions";
 import DropdownOption from "../../genereal-components/Dropddown-menu/DropdownOption";
+import DraggableContainer from "../../genereal-components/DnD/DnDWithLib";
 
 const GameSettings = () => {
   const dispatch = useAppDispatch();
@@ -83,11 +84,12 @@ const GameSettings = () => {
           </button>
         )}
       </div>
-      <DragAndDropComponent
+      {/* <DragAndDropComponent
         items={dragItems}
         setItems={setDragItems}
         dragActive={dragActive}
-      />
+      /> */}
+      <DraggableContainer items={dragItems} />
       <div
         style={{
           display: "flex",

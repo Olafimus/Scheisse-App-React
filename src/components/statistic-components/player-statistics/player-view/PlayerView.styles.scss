@@ -9,10 +9,48 @@
   }
   .statistics-section {
     background-color: rgb(50, 50, 60);
+
+    .matchcount-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+      padding: 10px;
+      cursor: pointer;
+      .overall-matches {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        gap: 0.2em;
+      }
+      .detail-match-count-container {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        gap: 0.2em;
+        overflow: hidden;
+        transition: 300ms;
+      }
+    }
+    .player-match-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 33% 33% 33%;
+      gap: 0.2em;
+      padding: 10px;
+    }
   }
   .matches-section {
     .player-matchlist-container {
       background-color: rgb(50, 50, 60);
+      .match-overview {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        gap: 0.2em;
+        padding: 10px;
+        .match-element {
+          display: contents;
+        }
+      }
     }
   }
 }

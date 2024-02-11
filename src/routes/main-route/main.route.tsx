@@ -90,6 +90,9 @@ const MainRoute = () => {
     const match = buildMatch();
     const matches = playedMatches.filter((m) => m.id === matchId);
     if (!matches.length) dispatch(addMatchToHist(match));
+    players.forEach((pl) => {
+      addMatchToUser(pl.name, matchId, pl.placement);
+    });
     // dispatch(resetHistory());
   }, [finished]);
 
