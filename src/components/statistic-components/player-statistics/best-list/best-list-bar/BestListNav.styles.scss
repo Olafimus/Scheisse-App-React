@@ -1,0 +1,31 @@
+.best-list-nav {
+  display: flex;
+  justify-content: center;
+  // padding: 10px;
+  // width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  margin-bottom: 5px;
+  gap: 0.3em;
+
+  .best-list-search {
+    flex: 1;
+    padding: 5px;
+    font-size: large;
+  }
+  .btn {
+    font-size: large;
+    font-weight: bold;
+    width: 2em;
+    // min-width: 25px;
+    height: 2em;
+    cursor: pointer;
+    border-radius: 0.3em;
+  }
+  .active {
+    background-color: green;
+  }
+  .inactive {
+    background-color: rgb(142, 157, 171);
+  }
+}

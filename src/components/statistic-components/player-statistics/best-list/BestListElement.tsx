@@ -1,6 +1,6 @@
 import "./BestList.styles.scss";
 import React from "react";
-import { StatPlayer } from "./PlayerStatSlice";
+import { StatPlayer } from "../PlayerStatSlice";
 import { spawn } from "child_process";
 import { BestListSortModes } from "./BestList";
 import { useNavigate } from "react-router-dom";

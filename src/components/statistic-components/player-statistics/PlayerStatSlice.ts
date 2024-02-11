@@ -2,7 +2,6 @@ import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
-  PayloadAction,
 } from "@reduxjs/toolkit";
 import { store } from "../../../app/store";
 import { getAllPlayers } from "../../../features/firebase/statistics";
@@ -27,7 +26,7 @@ export type StatPlayer = BasePlayer & {
   id: string;
   matches: string[];
   name: string;
-  orderedMatchStats: { [key: number]: LoadedStatMatch[] };
+  orderedMatchStats: { [key: number]: OrderedMatchStats };
 };
 
 type FailedStatMatch = {
@@ -45,6 +44,7 @@ export type LoadedStatMatch = {
   rating: number;
   rounds: number;
   playerCount: number;
+  players: string[];
 };
 
 export type StatPlayers = {
@@ -94,10 +94,20 @@ const getMatchStats = (match: string, name: string) => {
     rating,
     rounds: fullMatch.roundNumber,
     playerCount,
+    players: fullMatch.matchPlayers.map((el) => el.name),
   };
   return data;
 };
 type placements = { [key: number]: number };
+
+export type OrderedMatchStats = {
+  matchStats: LoadedStatMatch[];
+  matchCount: number;
+  winRate: number;
+  averagePoints: number;
+  averageRating: number;
+  firstPlaces: number;
+};
 
 export const loadStatPlayers = createAsyncThunk(
   "statPlayers/loadStatPlayers",
@@ -142,10 +152,37 @@ export const loadStatPlayers = createAsyncThunk(
         return count;
       }, 0),
       orderedMatchStats: pl.matchstats.reduce(
-        (acc: { [key: number]: LoadedStatMatch[] }, cur) => {
+        (acc: { [key: number]: OrderedMatchStats }, cur) => {
           // if (cur.status === "failed") return acc;
+
           const key = cur.playerCount;
-          acc[key] ? acc[key].push(cur) : (acc[key] = [cur]);
+          acc[key]
+            ? acc[key].matchStats.push(cur)
+            : (acc[key] = {
+                matchStats: [cur],
+                matchCount: 1,
+                winRate: cur.placement === 1 ? 1 : 0,
+                averagePoints: cur.avgScore,
+                averageRating: cur.rating,
+                firstPlaces: 0,
+              });
+
+          acc[key].matchCount = acc[key].matchStats.length;
+          acc[key].averageRating =
+            (cur.rating + acc[key].averageRating * (acc[key].matchCount - 1)) /
+            acc[key].matchCount;
+          acc[key].averagePoints =
+            (cur.avgScore +
+              acc[key].averagePoints * (acc[key].matchCount - 1)) /
+            acc[key].matchCount;
+          acc[key].winRate =
+            ((cur.placement === 1 ? 1 : 0) +
+              acc[key].winRate * (acc[key].matchCount - 1)) /
+            acc[key].matchCount;
+          acc[key].firstPlaces =
+            cur.placement === 1
+              ? acc[key].firstPlaces + 1
+              : acc[key].firstPlaces;
           return acc;
         },
         {}
@@ -174,9 +211,8 @@ export const StatPlayersSlice = createSlice({
       s.status = "succeeded";
       s.error = null;
       s.lastUpdate = Date.now();
-      a.payload;
       // console.log(a.payload[10].matchstats);
-      StatPlayersAdapter.upsertMany(s, a.payload);
+      StatPlayersAdapter.setAll(s, a.payload);
     });
   },
 });

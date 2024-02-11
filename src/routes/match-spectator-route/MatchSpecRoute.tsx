@@ -28,7 +28,9 @@ const MatchSpecRoute = () => {
         const canceled = Date.now() - match.startedAt > 1000 * 60 * 60 * 24;
         if (!match.finished && canceled) deleteMatch(match.matchRef);
       });
-      setAllMatches(matches);
+      setAllMatches(
+        matches.sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0))
+      );
     };
     loadMatches();
   }, []);

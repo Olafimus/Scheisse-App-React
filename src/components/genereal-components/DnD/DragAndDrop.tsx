@@ -31,10 +31,12 @@ const DragAndDropComponent = ({
   setItems: (val: Item[]) => void;
 }) => {
   const dragItem = useRef<Item | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleDragStart = (e: React.DragEvent, item: Item) => {
     if (!dragActive) return;
     dragItem.current = item;
+
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -64,6 +66,55 @@ const DragAndDropComponent = ({
     }
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!dragActive || !isDragging) return;
+
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const targetElement = e.target as HTMLDivElement; // Hier Typisierung hinzugefügt
+    const offsetX = touch.clientX - targetElement.getBoundingClientRect().left;
+    const offsetY = touch.clientY - targetElement.getBoundingClientRect().top;
+
+    targetElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+  };
+
+  const handleTouchDrop = (
+    e: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    e.preventDefault();
+    if (!dragActive || !isDragging) return;
+
+    if (dragItem.current) {
+      const newItems = [...items];
+      const draggedItem = newItems.find(
+        (item) => item.id === dragItem.current!.id
+      );
+
+      if (draggedItem) {
+        newItems.splice(items.indexOf(draggedItem), 1);
+        newItems.splice(index, 0, draggedItem);
+        setItems(newItems);
+      }
+
+      dragItem.current = null;
+    }
+
+    // Hier kannst du die Verschiebung zurücksetzen
+    e.currentTarget.style.transform = "translate(0, 0)";
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (
+    e: React.TouchEvent<HTMLDivElement>,
+    item: Item
+  ) => {
+    if (!dragActive) return;
+    setIsDragging(true);
+    dragItem.current = item;
+  };
+
   return (
     <div
       style={{
@@ -77,6 +128,9 @@ const DragAndDropComponent = ({
         <div
           key={item.id}
           draggable={dragActive}
+          onTouchStart={(e) => handleTouchStart(e, item)}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={(e) => handleTouchDrop(e, index)}
           onDragStart={(e) => handleDragStart(e, item)}
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, index)}
